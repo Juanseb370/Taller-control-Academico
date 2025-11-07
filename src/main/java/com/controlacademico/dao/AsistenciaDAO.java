@@ -2,33 +2,38 @@ package com.controlacademico.dao;
 
 import com.controlacademico.config.ConexionBD;
 import com.controlacademico.modelo.Asistencia;
-
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class AsistenciaDAO {
 
-    public boolean insertarAsistencia(Asistencia asistencia) {
+    public int insertarAsistenciaYObtenerId(Asistencia asistencia) {
         String sql = "INSERT INTO asistencias (estudiante_id, curso_id, fecha_clase, estado_asistencia, novedades) VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection conn = ConexionBD.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection con = ConexionBD.conectar();
+             PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
-            stmt.setInt(1, asistencia.getEstudianteId());
-            stmt.setInt(2, asistencia.getCursoId());
-            stmt.setDate(3, asistencia.getFechaClase());
-            stmt.setString(4, asistencia.getEstadoAsistencia()); // ENUM: presente / ausente / tardanza
-            stmt.setString(5, asistencia.getNovedades());
+            ps.setInt(1, asistencia.getEstudianteId());
+            ps.setInt(2, asistencia.getCursoId());
+            ps.setDate(3, asistencia.getFechaClase());
+            ps.setString(4, asistencia.getEstadoAsistencia());
+            ps.setString(5, asistencia.getNovedades());
 
-            int filas = stmt.executeUpdate();
-            System.out.println(" Conexión exitosa a la base de datos");
-            return filas > 0;
+            int filas = ps.executeUpdate();
+
+            if (filas > 0) {
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        int idGenerado = rs.getInt(1);
+                        System.out.println(" Asistencia insertada con ID: " + idGenerado);
+                        return idGenerado;
+                    }
+                }
+            }
 
         } catch (SQLException e) {
             System.out.println(" Error al insertar asistencia: " + e.getMessage());
-            return false;
         }
+
+        return -1;
     }
 }

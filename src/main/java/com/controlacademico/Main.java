@@ -9,10 +9,10 @@ public class Main {
 
         //---------------------------  INSERTAR ESTUDIANTE ---------------------------------
         Estudiante nuevoEstudiante = new Estudiante();
-        nuevoEstudiante.setIdentificacion("375838752384");
+        nuevoEstudiante.setIdentificacion("21125612365");
         nuevoEstudiante.setNombre("Juan Sebastian Almendra Pechene Final2");
-        nuevoEstudiante.setCorreoInstitucional("Pruebametodosfull@estudiante.uniajc.edu.co");
-        nuevoEstudiante.setCorreoPersonal("metodosfull@gmail.com");
+        nuevoEstudiante.setCorreoInstitucional("FddF@estudiante.uniajc.edu.co");
+        nuevoEstudiante.setCorreoPersonal("dfffd@gmail.com");
         nuevoEstudiante.setTelefono("3225973565");
         nuevoEstudiante.setEsVocero(false);
         nuevoEstudiante.setComentarios("estudiante de cuarto semestre.");
@@ -32,10 +32,10 @@ public class Main {
         //---------------------------  INSERTAR DOCENTE ---------------------------------
         Docente nuevoDocente = new Docente();
         nuevoDocente.setNombreDocente("JUAN PEREZ GOMEZ");
-        nuevoDocente.setIdentificacion("142385275");
+        nuevoDocente.setIdentificacion("1651652311625");
         nuevoDocente.setTipoIdentificacion("CC");
         nuevoDocente.setGenero("Femenino");
-        nuevoDocente.setCorreo("metodosdocentefull.gomez@uniajc.edu.co");
+        nuevoDocente.setCorreo("dsadasdffffff.gomez@uniajc.edu.co");
         nuevoDocente.setTituloEstudios("Ingeniería de Sistemas");
         nuevoDocente.setIdiomas("Inglés");
         nuevoDocente.setCertificaciones("Oracle Java SE 11");
@@ -153,8 +153,46 @@ public class Main {
           
  
   
+            //--------------------------- INSERTAR CALIFICACIÓN ---------------------------------
+            Calificacion nuevaCalificacion = new Calificacion();
+            nuevaCalificacion.setEstudianteId(insertadoEstudiante); // ID del estudiante recién insertado
+            nuevaCalificacion.setComponenteEvaluacionId(idComponenteGenerado); // ID del componente recién insertado
+            nuevaCalificacion.setNota(4.5);
+            nuevaCalificacion.setComentariosCalificacion("Excelente desempeño en el examen parcial.");
+
+            CalificacionDAO daoCalificacion = new CalificacionDAO();
+            int idCalificacionGenerada = daoCalificacion.insertarCalificacionYObtenerId(nuevaCalificacion);
+
+            if (idCalificacionGenerada != -1) {
+                System.out.println(" Calificación insertada correctamente con ID: " + idCalificacionGenerada);
+            } else {
+                System.out.println(" No se pudo insertar la calificación.");
+            }
+
 
 
 //-------------------------------------------------------------------
+
+
+
+            //--------------------------- INSERTAR ASISTENCIA ---------------------------------
+
+
+                Asistencia nuevaAsistencia = new Asistencia();
+                nuevaAsistencia.setEstudianteId(insertadoEstudiante); // ID del estudiante insertado
+                nuevaAsistencia.setCursoId(idCursoGenerado);          // ID del curso insertado
+                nuevaAsistencia.setFechaClase(Date.valueOf("2025-10-28"));
+                nuevaAsistencia.setEstadoAsistencia("Presente");        // VALORES SON:: PRESENTE, AUSENTE, TARDANZA
+                nuevaAsistencia.setNovedades("Llegó 10 minutos tarde, pero participó activamente.");
+
+                AsistenciaDAO daoAsistencia = new AsistenciaDAO();
+                int idAsistenciaGenerada = daoAsistencia.insertarAsistenciaYObtenerId(nuevaAsistencia);
+
+                if (idAsistenciaGenerada != -1) {
+                    System.out.println(" Asistencia registrada correctamente con ID: " + idAsistenciaGenerada);
+                } else {
+                    System.out.println(" No se pudo registrar la asistencia.");
+                }
+
     }
 }
