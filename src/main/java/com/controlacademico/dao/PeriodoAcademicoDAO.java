@@ -86,29 +86,64 @@ public class PeriodoAcademicoDAO {
             }
         }
 
+//-----------------ACTUALIZAR
 
+// MÉTODO PARA ACTUALIZAR UN PERIODO ACADÉMICO
+        public boolean actualizarPeriodoAcademico(PeriodoAcademico periodo) {
+            String sql = "UPDATE periodos_academicos SET nombre_periodo = ?, fecha_inicio = ?, fecha_fin = ? WHERE periodo_academico_id = ?";
 
+            try (Connection con = ConexionBD.conectar();
+                PreparedStatement ps = con.prepareStatement(sql)) {
 
+                ps.setString(1, periodo.getNombrePeriodo());
+                ps.setDate(2, periodo.getFechaInicio());
+                ps.setDate(3, periodo.getFechaFin());
+                ps.setInt(4, periodo.getPeriodoAcademicoId());
 
+                int filas = ps.executeUpdate();
+                return filas > 0;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            } catch (Exception e) {
+                System.out.println(" Error al actualizar periodo académico: " + e.getMessage());
+                return false;
+            }
+        }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

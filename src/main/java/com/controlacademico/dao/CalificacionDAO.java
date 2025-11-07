@@ -83,4 +83,23 @@ public class CalificacionDAO {
         }
 
 
+        //--------------------------ACTUALIZAR
+
+            public boolean actualizarCalificacion(Calificacion calificacion) {
+                String sql = "UPDATE calificaciones SET estudiante_id=?, componente_evaluacion_id=?, nota=?, comentarios_calificacion=? WHERE calificacion_id=?";
+                try (Connection con = ConexionBD.conectar();
+                    PreparedStatement ps = con.prepareStatement(sql)) {
+                    ps.setInt(1, calificacion.getEstudianteId());
+                    ps.setInt(2, calificacion.getComponenteEvaluacionId());
+                    ps.setDouble(3, calificacion.getNota());
+                    ps.setString(4, calificacion.getComentariosCalificacion());
+                    ps.setInt(5, calificacion.getCalificacionId());
+                    return ps.executeUpdate() > 0;
+                } catch (SQLException e) {
+                    System.out.println("Error al actualizar calificación: " + e.getMessage());
+                    return false;
+                }
+            }
+
+
 }

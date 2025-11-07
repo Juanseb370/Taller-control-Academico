@@ -27,7 +27,7 @@ public int insertarComponenteEvaluacionYObtenerid(ComponenteEvaluacion component
             try (var rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
                     int idGenerado = rs.getInt(1);
-                    System.out.println("✅ ID generado para el componente de evaluación: " + idGenerado);
+                    System.out.println(" ID generado para el componente de evaluación: " + idGenerado);
                     return idGenerado;
                 }
             }
@@ -82,6 +82,23 @@ public int insertarComponenteEvaluacionYObtenerid(ComponenteEvaluacion component
                 return false;
             }
         }
+
+        //------------------------ACTUALIZAR
+
+            public boolean actualizarComponenteEvaluacion(ComponenteEvaluacion componente) {
+                String sql = "UPDATE componentes_evaluacion SET corte_evaluacion_id=?, nombre_componente=?, porcentaje=? WHERE componente_evaluacion_id=?";
+                try (Connection con = ConexionBD.conectar();
+                    PreparedStatement ps = con.prepareStatement(sql)) {
+                    ps.setInt(1, componente.getCorteEvaluacionId());
+                    ps.setString(2, componente.getNombreComponente());
+                    ps.setDouble(3, componente.getPorcentaje());
+                    ps.setInt(4, componente.getComponenteEvaluacionId());
+                    return ps.executeUpdate() > 0;
+                } catch (SQLException e) {
+                    System.out.println("Error al actualizar componente de evaluación: " + e.getMessage());
+                    return false;
+                }
+            }
 
 
 }

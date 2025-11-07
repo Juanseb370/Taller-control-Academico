@@ -8,12 +8,12 @@ public class Main {
     public static void main(String[] args) {
 
 
-///--------------------------------------ESTA ES LA CRIPTONITA PARA ELIMINAR TODOS LOS REGISTROS
+///--------------------------------------ESTE ES EL METODOPARA ELIMINAR TODOS LOS REGISTROS DE LA BASE DE DATOS
 
-        // //Esto eliminará TODOS los datos de la base de datos
-        // System.out.println(" INICIANDO LIMPIEZA DE LA BASE DE DATOS...");
-        // LimpiarBDDAO.eliminarTodosLosRegistros();
-        // System.out.println(" LIMPIEZA FINALIZADA.");
+        //Esto eliminará TODOS los datos de la base de datos
+        System.out.println(" INICIANDO LIMPIEZA DE LA BASE DE DATOS...");
+        LimpiarBDDAO.eliminarTodosLosRegistros();
+        System.out.println(" LIMPIEZA FINALIZADA.");
     
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -215,44 +215,44 @@ public class Main {
 
 
                 //------------------------------------ LISTAR ESTUDIANTES ------------------------------------
-            System.out.println("\n📋 LISTADO DE ESTUDIANTES:");
+            System.out.println("\n LISTADO DE ESTUDIANTES:");
             for (Estudiante e : daoEstudiante.listarEstudiantes()) {
                 System.out.println("ID: " + e.getEstudianteId() + " | Nombre: " + e.getNombre() + " | Correo: " + e.getCorreoInstitucional());
             }
 
             //------------------------------------ LISTAR DOCENTES ------------------------------------
-            System.out.println("\n📋 LISTADO DE DOCENTES:");
+            System.out.println("\n LISTADO DE DOCENTES:");
             for (Docente d : daoDocente.listarDocentes()) {
                 System.out.println("ID: " + d.getDocenteId() + " | Nombre: " + d.getNombreDocente() + " | Correo: " + d.getCorreo());
             }
 
             //------------------------------------ LISTAR CURSOS ------------------------------------
-            System.out.println("\n📋 LISTADO DE CURSOS:");
+            System.out.println("\n LISTADO DE CURSOS:");
             for (Curso c : daoCurso.listarCursos()) {
                 System.out.println("ID: " + c.getCursoId() + " | Nombre: " + c.getNombreCurso() + " | Descripción: " + c.getDescripcionCurso());
             }
 
             //------------------------------------ LISTAR CLASES ------------------------------------
-            System.out.println("\n📋 LISTADO DE CLASES:");
+            System.out.println("\n LISTADO DE CLASES:");
             for (Clases clase : daoClase.listarClases()) {
                 System.out.println("ID: " + clase.getClaseId() + " | Tema: " + clase.getTemaClase() + " | Fecha: " + clase.getFechaClase());
             }
 
             //------------------------------------ LISTAR CORTES DE EVALUACIÓN ------------------------------------
-            System.out.println("\n📋 LISTADO DE CORTES DE EVALUACIÓN:");
+            System.out.println("\n LISTADO DE CORTES DE EVALUACIÓN:");
             for (CorteEvaluacion corte : daoCorte.listarCortesEvaluacion()) {
                 System.out.println("ID: " + corte.getCorteEvaluacionId() + " | Nombre: " + corte.getNombreCorte() + " | Porcentaje: " + corte.getPorcentaje());
             }
 
             //------------------------------------ LISTAR COMPONENTES DE EVALUACIÓN ------------------------------------
-            System.out.println("\n📋 LISTADO DE COMPONENTES DE EVALUACIÓN:");
+            System.out.println("\n LISTADO DE COMPONENTES DE EVALUACIÓN:");
             for (ComponenteEvaluacion comp : daoComponente.listarComponentesEvaluacion()) {
                 System.out.println("ID: " + comp.getComponenteEvaluacionId() + " | Nombre: " + comp.getNombreComponente() + " | Porcentaje: " + comp.getPorcentaje());
             }
 
             //------------------------------------ LISTAR CALIFICACIONES ------------------------------------
             CalificacionDAO daocalificacion = new CalificacionDAO();
-            System.out.println("\n📋 LISTADO DE CALIFICACIONES:");
+            System.out.println("\n LISTADO DE CALIFICACIONES:");
             for (Calificacion cal : daocalificacion.listarCalificaciones()) {
                 System.out.println("ID: " + cal.getCalificacionId() + " | Estudiante ID: " + cal.getEstudianteId() +
                         " | Nota: " + cal.getNota() + " | Comentarios: " + cal.getComentariosCalificacion());
@@ -260,7 +260,7 @@ public class Main {
 
             //------------------------------------ LISTAR ASISTENCIAS ------------------------------------
             AsistenciaDAO daoasistencia = new AsistenciaDAO();
-            System.out.println("\n📋 LISTADO DE ASISTENCIAS:");
+            System.out.println("\n LISTADO DE ASISTENCIAS:");
             for (Asistencia asis : daoasistencia.listarAsistencias()) {
                 System.out.println("ID: " + asis.getAsistenciaId() + " | Estudiante ID: " + asis.getEstudianteId() +
                         " | Curso ID: " + asis.getCursoId() + " | Estado: " + asis.getEstadoAsistencia() +
@@ -272,37 +272,140 @@ public class Main {
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-            // ELIMINAR INFORMACIÓN DE LA BASE DE DATOS
+//----------------------- actualizar general
 
 
 
-            
+
+        System.out.println("\n=====  ACTUALIZACIÓN DE REGISTROS =====");
+
+        // ================================
+        // DAO INSTANCIAS
+        // ================================
+        EstudianteDAO estudianteDAO = new EstudianteDAO();
+        DocenteDAO docenteDAO = new DocenteDAO();
+        CursoDAO cursoDAO = new CursoDAO();
+        CorteEvaluacionDAO corteDAO = new CorteEvaluacionDAO();
+        ComponenteEvaluacionDAO componenteDAO = new ComponenteEvaluacionDAO();
+        CalificacionDAO calificacionDAO = new CalificacionDAO();
+        AsistenciaDAO asistenciaDAO = new AsistenciaDAO();
+
+        // ================================
+        // ESTUDIANTE
+        // ================================
+        Estudiante estudiante = new Estudiante();
+        estudiante.setEstudianteId(1); // ID existente
+        estudiante.setIdentificacion("100200300");
+        estudiante.setNombre("Carlos Actualizado");
+        estudiante.setCorreoInstitucional("carlos.actualizado@uniajc.edu.co");
+        estudiante.setCorreoPersonal("carlosactualizado@gmail.com");
+        estudiante.setTelefono("3105559999");
+        estudiante.setEsVocero(false);
+        estudiante.setComentarios("Actualización de datos del estudiante");
+        estudiante.setTipoDocumento("CC");
+        estudiante.setGenero("M");
+
+        boolean actualizadoEst = estudianteDAO.actualizarEstudiante(estudiante);
+        System.out.println(actualizadoEst ? " Estudiante actualizado correctamente" : " Error al actualizar estudiante");
 
 
-   
+        // ================================
+        // DOCENTE
+        // ================================
+        Docente docente = new Docente();
+        docente.setDocenteId(1);
+        docente.setNombreDocente("María López Actualizada");
+        docente.setIdentificacion("987654321");
+        docente.setTipoIdentificacion("CC");
+        docente.setGenero("F");
+        docente.setCorreo("maria.lopez@uniajc.edu.co");
+        docente.setTituloEstudios("Magíster en Educación");
+        docente.setIdiomas("Inglés B2");
+        docente.setCertificaciones("Docencia universitaria");
 
-        //Esto eliminará TODOS los datos de la base de datos
-        // System.out.println(" INICIANDO LIMPIEZA DE LA BASE DE DATOS...");
-        // LimpiarBDDAO.eliminarTodosLosRegistros();
-        // System.out.println(" LIMPIEZA FINALIZADA.");
+        boolean actualizadoDoc = docenteDAO.actualizarDocente(docente);
+        System.out.println(actualizadoDoc ? " Docente actualizado correctamente" : " Error al actualizar docente");
+
+
+        // ================================
+        // CURSO
+        // ================================
+        Curso curso = new Curso();
+        curso.setCursoId(1);
+        curso.setNombreCurso("Programación Avanzada");
+        curso.setDescripcionCurso("Curso actualizado con nuevas prácticas de POO");
+        curso.setPeriodoAcademicoId(1);
+        curso.setDocenteId(1);
+
+        boolean actualizadoCurso = cursoDAO.actualizarCurso(curso);
+        System.out.println(actualizadoCurso ? "Curso actualizado correctamente" : " Error al actualizar curso");
+
+
+        // ================================
+        // CORTE DE EVALUACIÓN
+        // ================================
+        CorteEvaluacion corte = new CorteEvaluacion();
+        corte.setCorteEvaluacionId(1);
+        corte.setCursoId(1);
+        corte.setPeriodoAcademicoId(1);
+        corte.setNombreCorte("Primer Corte - Actualizado");
+        corte.setPorcentaje(35.0);
+        corte.setComentariosCorte("Se actualizó el porcentaje y nombre del corte");
+
+        boolean actualizadoCorte = corteDAO.actualizarCorteEvaluacion(corte);
+        System.out.println(actualizadoCorte ? " Corte de evaluación actualizado correctamente" : " Error al actualizar corte");
+
+
+        // ================================
+        // COMPONENTE DE EVALUACIÓN
+        // ================================
+        ComponenteEvaluacion componente = new ComponenteEvaluacion();
+        componente.setComponenteEvaluacionId(1);
+        componente.setCorteEvaluacionId(1);
+        componente.setNombreComponente("Examen Final - Actualizado");
+        componente.setPorcentaje(50.0);
+
+        boolean actualizadoComponente = componenteDAO.actualizarComponenteEvaluacion(componente);
+        System.out.println(actualizadoComponente ? " Componente de evaluación actualizado correctamente" : " Error al actualizar componente");
+
+
+        // ================================
+        // CALIFICACIÓN
+        // ================================
+        Calificacion calificacion = new Calificacion();
+        calificacion.setCalificacionId(1);
+        calificacion.setEstudianteId(1);
+        calificacion.setComponenteEvaluacionId(1);
+        calificacion.setNota(4.8);
+        calificacion.setComentariosCalificacion("Actualización: excelente desempeño");
+
+        boolean actualizadoCalif = calificacionDAO.actualizarCalificacion(calificacion);
+        System.out.println(actualizadoCalif ? " Calificación actualizada correctamente" : " Error al actualizar calificación");
+
+
+        // ================================
+        // ASISTENCIA
+        // ================================
+        Asistencia asistencia = new Asistencia();
+        asistencia.setAsistenciaId(1);
+        asistencia.setEstudianteId(1);
+        asistencia.setCursoId(1);
+        asistencia.setFechaClase(Date.valueOf("2025-10-28"));
+        asistencia.setEstadoAsistencia("Presente");
+        asistencia.setNovedades("Actualizado: llegó puntual");
+
+        boolean actualizadoAsistencia = asistenciaDAO.actualizarAsistencia(asistencia);
+        System.out.println(actualizadoAsistencia ? " Asistencia actualizada correctamente" : " Error al actualizar asistencia");
+
+
+        System.out.println("\n=====  ACTUALIZACIÓN COMPLETA =====");
+     }
+ }
+
+
+
+
     
 
 
-             
-
-
-
-
-
-
-
-
-
-
-
-
-    }
-
-
     
-}

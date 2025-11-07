@@ -84,6 +84,24 @@ public class AsistenciaDAO {
             }
         }
 
+//-------------------ACTUALIZAR
+
+            public boolean actualizarAsistencia(Asistencia asistencia) {
+                String sql = "UPDATE asistencias SET estudiante_id=?, curso_id=?, fecha_clase=?, estado_asistencia=?, novedades=? WHERE asistencia_id=?";
+                try (Connection con = ConexionBD.conectar();
+                    PreparedStatement ps = con.prepareStatement(sql)) {
+                    ps.setInt(1, asistencia.getEstudianteId());
+                    ps.setInt(2, asistencia.getCursoId());
+                    ps.setDate(3, asistencia.getFechaClase());
+                    ps.setString(4, asistencia.getEstadoAsistencia());
+                    ps.setString(5, asistencia.getNovedades());
+                    ps.setInt(6, asistencia.getAsistenciaId());
+                    return ps.executeUpdate() > 0;
+                } catch (SQLException e) {
+                    System.out.println("Error al actualizar asistencia: " + e.getMessage());
+                    return false;
+                }
+            }
 
 
 }

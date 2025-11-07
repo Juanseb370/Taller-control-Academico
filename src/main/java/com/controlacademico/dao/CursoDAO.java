@@ -15,31 +15,31 @@ public class CursoDAO {
 
 
 
-    public int insertarCursoYObtenerId(Curso curso) {
-        String sql = "INSERT INTO cursos (nombre_curso, descripcion_curso, periodo_academico_id, docente_id) VALUES (?, ?, ?, ?)";
-        int idGenerado = -1;
+            public int insertarCursoYObtenerId(Curso curso) {
+                String sql = "INSERT INTO cursos (nombre_curso, descripcion_curso, periodo_academico_id, docente_id) VALUES (?, ?, ?, ?)";
+                int idGenerado = -1;
 
-        try (Connection con = ConexionBD.conectar();
-            PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, curso.getNombreCurso());
-            ps.setString(2, curso.getDescripcionCurso());
-            ps.setInt(3, curso.getPeriodoAcademicoId());
-            ps.setInt(4, curso.getDocenteId());
+                try (Connection con = ConexionBD.conectar();
+                    PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+                    ps.setString(1, curso.getNombreCurso());
+                    ps.setString(2, curso.getDescripcionCurso());
+                    ps.setInt(3, curso.getPeriodoAcademicoId());
+                    ps.setInt(4, curso.getDocenteId());
 
-            ps.executeUpdate();
-    // Obtener el ID generado
-            ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                idGenerado = rs.getInt(1);
-                System.out.println("✅ ID generado para el curso: " + idGenerado);
+                    ps.executeUpdate();
+            // Obtener el ID generado
+                    ResultSet rs = ps.getGeneratedKeys();
+                    if (rs.next()) {
+                        idGenerado = rs.getInt(1);
+                        System.out.println(" ID generado para el curso: " + idGenerado);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                return idGenerado;
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return idGenerado;
-    }
 
 //---------------LISTAR
 
@@ -81,7 +81,33 @@ public class CursoDAO {
                     System.out.println(" Error al eliminar curso: " + e.getMessage());
                     return false;
                 }
+                }
+
+
+//-----------------ACTUALIZAR
+
+          public boolean actualizarCurso(Curso curso) {
+            String sql = "UPDATE cursos SET nombre_curso=?, descripcion_curso=?, periodo_academico_id=?, docente_id=? WHERE curso_id=?";
+            try (Connection con = ConexionBD.conectar();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(1, curso.getNombreCurso());
+                ps.setString(2, curso.getDescripcionCurso());
+                ps.setInt(3, curso.getPeriodoAcademicoId());
+                ps.setInt(4, curso.getDocenteId());
+                ps.setInt(5, curso.getCursoId());
+                return ps.executeUpdate() > 0;
+            } catch (SQLException e) {
+                System.out.println("Error al actualizar curso: " + e.getMessage());
+                return false;
             }
+        
+
+
+
+            }
+
+
+
 
 
 }

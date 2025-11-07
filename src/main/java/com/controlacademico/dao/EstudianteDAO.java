@@ -101,6 +101,29 @@ public class EstudianteDAO {
                 }
             }
 
+//-------------------ACTUALIZAR
+
+
+        public boolean actualizarEstudiante(Estudiante estudiante) {
+            String sql = "UPDATE estudiantes SET identificacion=?, nombre=?, correo_institucional=?, correo_personal=?, telefono=?, es_vocero=?, comentarios=?, tipo_documento=?, genero=? WHERE estudiante_id=?";
+            try (Connection con = ConexionBD.conectar();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(1, estudiante.getIdentificacion());
+                ps.setString(2, estudiante.getNombre());
+                ps.setString(3, estudiante.getCorreoInstitucional());
+                ps.setString(4, estudiante.getCorreoPersonal());
+                ps.setString(5, estudiante.getTelefono());
+                ps.setBoolean(6, estudiante.isEsVocero());
+                ps.setString(7, estudiante.getComentarios());
+                ps.setString(8, estudiante.getTipoDocumento());
+                ps.setString(9, estudiante.getGenero());
+                ps.setInt(10, estudiante.getEstudianteId());
+                return ps.executeUpdate() > 0;
+            } catch (SQLException e) {
+                System.out.println("Error al actualizar estudiante: " + e.getMessage());
+                return false;
+            }
+        }
 
 
 

@@ -30,7 +30,7 @@ import java.util.List;
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 idGeneradoC = rs.getInt(1);
-                System.out.println("✅ ID generado para el corte de evaluación: " + idGeneradoC);    
+                System.out.println(" ID generado para el corte de evaluación: " + idGeneradoC);    
                 }
 
         } catch (Exception e) {
@@ -85,6 +85,29 @@ import java.util.List;
             return false;
         }
     }
+
+    //--------------------------------ACTUALIZAR
+
+            public boolean actualizarCorteEvaluacion(CorteEvaluacion corte) {
+            String sql = "UPDATE cortes_evaluacion SET curso_id=?, periodo_academico_id=?, nombre_corte=?, porcentaje=?, comentarios_corte=? WHERE corte_evaluacion_id=?";
+            try (Connection con = ConexionBD.conectar();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setInt(1, corte.getCursoId());
+                ps.setInt(2, corte.getPeriodoAcademicoId());
+                ps.setString(3, corte.getNombreCorte());
+                ps.setDouble(4, corte.getPorcentaje());
+                ps.setString(5, corte.getComentariosCorte());
+                ps.setInt(6, corte.getCorteEvaluacionId());
+                return ps.executeUpdate() > 0;
+            } catch (SQLException e) {
+                System.out.println("Error al actualizar corte de evaluación: " + e.getMessage());
+                return false;
+            }
+        }
+
+
+
+
 
 
 

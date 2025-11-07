@@ -82,4 +82,43 @@ public class ClaseDAO {
         }
 
 
+        //-------ACTUALIZAR
+
+
+    // -------------------------------------------------------------------------
+    // MÉTODO PARA ACTUALIZAR UNA CLASE EXISTENTE
+    // -------------------------------------------------------------------------
+   
+
+    public boolean actualizarClase(Clases clase) {
+        String sql = "UPDATE clases SET curso_id = ?, numero_clase = ?, fecha_clase = ?, "
+                   + "tema_clase = ?, descripcion_clase = ?, comentarios_clase = ? "
+                   + "WHERE clase_id = ?";
+
+        try (Connection con = ConexionBD.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, clase.getCursoId());
+            ps.setInt(2, clase.getNumeroClase());
+            ps.setDate(3, clase.getFechaClase());
+            ps.setString(4, clase.getTemaClase());
+            ps.setString(5, clase.getDescripcionClase());
+            ps.setString(6, clase.getComentariosClase());
+            ps.setInt(7, clase.getClaseId());
+
+            int filas = ps.executeUpdate();
+
+            if (filas > 0) {
+                System.out.println(" Clase actualizada correctamente. ID: " + clase.getClaseId());
+                return true;
+            } else {
+                System.out.println(" No se encontró la clase con ID: " + clase.getClaseId());
+                return false;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(" Error al actualizar la clase: " + e.getMessage());
+            return false;
+        }
+    }
 }
