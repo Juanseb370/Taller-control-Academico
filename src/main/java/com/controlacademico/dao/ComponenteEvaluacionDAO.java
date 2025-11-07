@@ -3,7 +3,10 @@ import com.controlacademico.config.ConexionBD;
 import com.controlacademico.modelo.ComponenteEvaluacion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 public class ComponenteEvaluacionDAO {
 
 
@@ -35,4 +38,33 @@ public int insertarComponenteEvaluacionYObtenerid(ComponenteEvaluacion component
     }
     return -1;
 }
+
+
+
+
+//---------------LISTAR
+
+        public List<ComponenteEvaluacion> listarComponentesEvaluacion() {
+        List<ComponenteEvaluacion> lista = new ArrayList<>();
+        String sql = "SELECT * FROM componentes_evaluacion";
+
+        try (Connection con = ConexionBD.conectar();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                ComponenteEvaluacion ce = new ComponenteEvaluacion();
+                ce.setComponenteEvaluacionId(rs.getInt("componente_evaluacion_id"));
+                ce.setCorteEvaluacionId(rs.getInt("corte_evaluacion_id"));
+                ce.setNombreComponente(rs.getString("nombre_componente"));
+                ce.setPorcentaje(rs.getDouble("porcentaje"));
+                lista.add(ce);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al listar componentes de evaluación: " + e.getMessage());
+        }
+        return lista;
+    }
+
 }

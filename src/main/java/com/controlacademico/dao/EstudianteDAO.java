@@ -7,10 +7,12 @@ import com.controlacademico.config.ConexionBD;
 import com.controlacademico.modelo.Estudiante;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EstudianteDAO {
 
-    
+    //----------------- INSERTAR ESTUDIANTE Y OBTENER ID AUTOGENERADO -----------------
 
     public int insertarEstudiante(Estudiante estudiante) {
         String sql = "INSERT INTO estudiantes (identificacion, nombre, correo_institucional, correo_personal, telefono, es_vocero, comentarios, tipo_documento, genero) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -47,5 +49,61 @@ public class EstudianteDAO {
 
         return idGenerado; // devuelve el ID autogenerado o -1 si falla
     }
+
+
+
+
+//------------------ LISTAR--------------------------
+
+        public List<Estudiante> listarEstudiantes() {
+            List<Estudiante> lista = new ArrayList<>();
+            String sql = "SELECT * FROM estudiantes";
+
+            try (Connection con = ConexionBD.conectar();
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+
+                while (rs.next()) {
+                    Estudiante e = new Estudiante();
+                    e.setEstudianteId(rs.getInt("estudiante_id"));
+                    e.setIdentificacion(rs.getString("identificacion"));
+                    e.setNombre(rs.getString("nombre"));
+                    e.setCorreoInstitucional(rs.getString("correo_institucional"));
+                    e.setCorreoPersonal(rs.getString("correo_personal"));
+                    e.setTelefono(rs.getString("telefono"));
+                    e.setEsVocero(rs.getBoolean("es_vocero"));
+                    e.setComentarios(rs.getString("comentarios"));
+                    e.setTipoDocumento(rs.getString("tipo_documento"));
+                    e.setGenero(rs.getString("genero"));
+                    lista.add(e);
+                }
+
+            } catch (SQLException e) {
+                System.out.println("Error al listar estudiantes: " + e.getMessage());
+            }
+            return lista;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
+
+//

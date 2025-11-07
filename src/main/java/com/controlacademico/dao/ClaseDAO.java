@@ -4,7 +4,10 @@ import com.controlacademico.config.ConexionBD;
 import com.controlacademico.modelo.Clases;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClaseDAO {
 
@@ -32,4 +35,33 @@ public class ClaseDAO {
     }
 
     
+
+    //------------------------- LISTAR
+
+        public List<Clases> listarClases() {
+        List<Clases> lista = new ArrayList<>();
+        String sql = "SELECT * FROM clases";
+
+        try (Connection con = ConexionBD.conectar();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Clases c = new Clases();
+                c.setClaseId(rs.getInt("clase_id"));
+                c.setCursoId(rs.getInt("curso_id"));
+                c.setNumeroClase(rs.getInt("numero_clase"));
+                c.setFechaClase(rs.getDate("fecha_clase"));
+                c.setTemaClase(rs.getString("tema_clase"));
+                c.setDescripcionClase(rs.getString("descripcion_clase"));
+                c.setComentariosClase(rs.getString("comentarios_clase"));
+                lista.add(c);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al listar clases: " + e.getMessage());
+        }
+        return lista;
+    }
+
 }

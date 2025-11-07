@@ -3,6 +3,8 @@ package com.controlacademico.dao;
 import com.controlacademico.config.ConexionBD;
 import com.controlacademico.modelo.Calificacion;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CalificacionDAO {
 
@@ -35,4 +37,33 @@ public class CalificacionDAO {
 
         return -1;
     }
+
+
+
+    //---------------LISTAR
+
+        public List<Calificacion> listarCalificaciones() {
+        List<Calificacion> lista = new ArrayList<>();
+        String sql = "SELECT * FROM calificaciones";
+
+        try (Connection con = ConexionBD.conectar();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Calificacion c = new Calificacion();
+                c.setCalificacionId(rs.getInt("calificacion_id"));
+                c.setEstudianteId(rs.getInt("estudiante_id"));
+                c.setComponenteEvaluacionId(rs.getInt("componente_evaluacion_id"));
+                c.setNota(rs.getDouble("nota"));
+                c.setComentariosCalificacion(rs.getString("comentarios_calificacion"));
+                lista.add(c);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al listar calificaciones: " + e.getMessage());
+        }
+        return lista;
+    }
+
 }

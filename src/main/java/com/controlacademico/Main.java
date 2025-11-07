@@ -9,10 +9,10 @@ public class Main {
 
         //---------------------------  INSERTAR ESTUDIANTE ---------------------------------
         Estudiante nuevoEstudiante = new Estudiante();
-        nuevoEstudiante.setIdentificacion("21125612365");
-        nuevoEstudiante.setNombre("Juan Sebastian Almendra Pechene Final2");
-        nuevoEstudiante.setCorreoInstitucional("FddF@estudiante.uniajc.edu.co");
-        nuevoEstudiante.setCorreoPersonal("dfffd@gmail.com");
+        nuevoEstudiante.setIdentificacion("1025478985");
+        nuevoEstudiante.setNombre("Juan Almendra");
+        nuevoEstudiante.setCorreoInstitucional("almendra@estudiante.uniajc.edu.co");
+        nuevoEstudiante.setCorreoPersonal("almendra2@gmail.com");
         nuevoEstudiante.setTelefono("3225973565");
         nuevoEstudiante.setEsVocero(false);
         nuevoEstudiante.setComentarios("estudiante de cuarto semestre.");
@@ -32,10 +32,10 @@ public class Main {
         //---------------------------  INSERTAR DOCENTE ---------------------------------
         Docente nuevoDocente = new Docente();
         nuevoDocente.setNombreDocente("JUAN PEREZ GOMEZ");
-        nuevoDocente.setIdentificacion("1651652311625");
+        nuevoDocente.setIdentificacion("7410215489");
         nuevoDocente.setTipoIdentificacion("CC");
-        nuevoDocente.setGenero("Femenino");
-        nuevoDocente.setCorreo("dsadasdffffff.gomez@uniajc.edu.co");
+        nuevoDocente.setGenero("masculino");
+        nuevoDocente.setCorreo("JPGPRUEBAFINAL.gomez@uniajc.edu.co");
         nuevoDocente.setTituloEstudios("Ingeniería de Sistemas");
         nuevoDocente.setIdiomas("Inglés");
         nuevoDocente.setCertificaciones("Oracle Java SE 11");
@@ -194,5 +194,69 @@ public class Main {
                     System.out.println(" No se pudo registrar la asistencia.");
                 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//------------------------------------------------LISTAR INFORMACION
+
+
+
+                //------------------------------------ LISTAR ESTUDIANTES ------------------------------------
+            System.out.println("\n📋 LISTADO DE ESTUDIANTES:");
+            for (Estudiante e : daoEstudiante.listarEstudiantes()) {
+                System.out.println("ID: " + e.getEstudianteId() + " | Nombre: " + e.getNombre() + " | Correo: " + e.getCorreoInstitucional());
+            }
+
+            //------------------------------------ LISTAR DOCENTES ------------------------------------
+            System.out.println("\n📋 LISTADO DE DOCENTES:");
+            for (Docente d : daoDocente.listarDocentes()) {
+                System.out.println("ID: " + d.getDocenteId() + " | Nombre: " + d.getNombreDocente() + " | Correo: " + d.getCorreo());
+            }
+
+            //------------------------------------ LISTAR CURSOS ------------------------------------
+            System.out.println("\n📋 LISTADO DE CURSOS:");
+            for (Curso c : daoCurso.listarCursos()) {
+                System.out.println("ID: " + c.getCursoId() + " | Nombre: " + c.getNombreCurso() + " | Descripción: " + c.getDescripcionCurso());
+            }
+
+            //------------------------------------ LISTAR CLASES ------------------------------------
+            System.out.println("\n📋 LISTADO DE CLASES:");
+            for (Clases clase : daoClase.listarClases()) {
+                System.out.println("ID: " + clase.getClaseId() + " | Tema: " + clase.getTemaClase() + " | Fecha: " + clase.getFechaClase());
+            }
+
+            //------------------------------------ LISTAR CORTES DE EVALUACIÓN ------------------------------------
+            System.out.println("\n📋 LISTADO DE CORTES DE EVALUACIÓN:");
+            for (CorteEvaluacion corte : daoCorte.listarCortesEvaluacion()) {
+                System.out.println("ID: " + corte.getCorteEvaluacionId() + " | Nombre: " + corte.getNombreCorte() + " | Porcentaje: " + corte.getPorcentaje());
+            }
+
+            //------------------------------------ LISTAR COMPONENTES DE EVALUACIÓN ------------------------------------
+            System.out.println("\n📋 LISTADO DE COMPONENTES DE EVALUACIÓN:");
+            for (ComponenteEvaluacion comp : daoComponente.listarComponentesEvaluacion()) {
+                System.out.println("ID: " + comp.getComponenteEvaluacionId() + " | Nombre: " + comp.getNombreComponente() + " | Porcentaje: " + comp.getPorcentaje());
+            }
+
+            //------------------------------------ LISTAR CALIFICACIONES ------------------------------------
+            CalificacionDAO daocalificacion = new CalificacionDAO();
+            System.out.println("\n📋 LISTADO DE CALIFICACIONES:");
+            for (Calificacion cal : daocalificacion.listarCalificaciones()) {
+                System.out.println("ID: " + cal.getCalificacionId() + " | Estudiante ID: " + cal.getEstudianteId() +
+                        " | Nota: " + cal.getNota() + " | Comentarios: " + cal.getComentariosCalificacion());
+            }
+
+            //------------------------------------ LISTAR ASISTENCIAS ------------------------------------
+            AsistenciaDAO daoasistencia = new AsistenciaDAO();
+            System.out.println("\n📋 LISTADO DE ASISTENCIAS:");
+            for (Asistencia asis : daoasistencia.listarAsistencias()) {
+                System.out.println("ID: " + asis.getAsistenciaId() + " | Estudiante ID: " + asis.getEstudianteId() +
+                        " | Curso ID: " + asis.getCursoId() + " | Estado: " + asis.getEstadoAsistencia() +
+                        " | Fecha: " + asis.getFechaClase());
+            }
+
+
+
     }
+
+
+    
 }

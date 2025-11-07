@@ -3,6 +3,8 @@ package com.controlacademico.dao;
 import com.controlacademico.config.ConexionBD;
 import com.controlacademico.modelo.Asistencia;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AsistenciaDAO {
 
@@ -36,4 +38,34 @@ public class AsistenciaDAO {
 
         return -1;
     }
+
+
+
+    //--------- LISTAR
+
+        public List<Asistencia> listarAsistencias() {
+        List<Asistencia> lista = new ArrayList<>();
+        String sql = "SELECT * FROM asistencias";
+
+        try (Connection con = ConexionBD.conectar();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Asistencia a = new Asistencia();
+                a.setAsistenciaId(rs.getInt("asistencia_id"));
+                a.setEstudianteId(rs.getInt("estudiante_id"));
+                a.setCursoId(rs.getInt("curso_id"));
+                a.setFechaClase(rs.getDate("fecha_clase"));
+                a.setEstadoAsistencia(rs.getString("estado_asistencia"));
+                a.setNovedades(rs.getString("novedades"));
+                lista.add(a);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al listar asistencias: " + e.getMessage());
+        }
+        return lista;
+    }
+
 }

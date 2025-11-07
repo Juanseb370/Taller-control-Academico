@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 // public class DocenteDAO {
 
@@ -75,4 +77,44 @@ public class DocenteDAO {
             return -1;
         }
     }
+
+
+
+
+    //-------LISTAR 
+
+
+        public List<Docente> listarDocentes() {
+        List<Docente> lista = new ArrayList<>();
+        String sql = "SELECT * FROM docentes";
+
+        try (Connection con = ConexionBD.conectar();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Docente d = new Docente();
+                d.setDocenteId(rs.getInt("docente_id"));
+                d.setNombreDocente(rs.getString("nombre_docente"));
+                d.setIdentificacion(rs.getString("identificacion"));
+                d.setTipoIdentificacion(rs.getString("tipo_identificacion"));
+                d.setGenero(rs.getString("genero"));
+                d.setCorreo(rs.getString("correo"));
+                d.setTituloEstudios(rs.getString("titulo_estudios"));
+                d.setIdiomas(rs.getString("idiomas"));
+                d.setCertificaciones(rs.getString("certificaciones"));
+                lista.add(d);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al listar docentes: " + e.getMessage());
+        }
+        return lista;
+    }
+
+
+
+
+
+
 }

@@ -6,32 +6,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PeriodoAcademicoDAO {
-
-//     //  Método para insertar un periodo académico
-//     public boolean insertarPeriodoAcademico(PeriodoAcademico p) {
-//         String sql = "INSERT INTO periodos_academicos (nombre_periodo, fecha_inicio, fecha_fin) VALUES (?, ?, ?)";
-
-//         try (Connection con = ConexionBD.conectar();
-//              PreparedStatement ps = con.prepareStatement(sql)) {
-
-//             ps.setString(1, p.getNombrePeriodo());
-//             ps.setDate(2, p.getFechaInicio());
-//             ps.setDate(3, p.getFechaFin());
-
-//             int filas = ps.executeUpdate();
-//             return filas > 0; // true si se insertó correctamente
-
-//         } catch (SQLException ex) {
-//             System.out.println(" Error al insertar periodo académico: " + ex.getMessage());
-//             return false;
-//         }
-//     }
-// }
-
-
-
 
 //-------------------------------------------------------------------------------------
 
@@ -61,6 +39,36 @@ public class PeriodoAcademicoDAO {
             return -1;
         }
     }
+
+
+
+
+
+    //---------------LISTAR
+
+            public List<PeriodoAcademico> listarPeriodos() {
+            List<PeriodoAcademico> lista = new ArrayList<>();
+            String sql = "SELECT * FROM periodos_academicos";
+
+            try (Connection con = ConexionBD.conectar();
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+
+                while (rs.next()) {
+                    PeriodoAcademico p = new PeriodoAcademico();
+                    p.setPeriodoAcademicoId(rs.getInt("periodo_academico_id"));
+                    p.setNombrePeriodo(rs.getString("nombre_periodo"));
+                    p.setFechaInicio(rs.getDate("fecha_inicio"));
+                    p.setFechaFin(rs.getDate("fecha_fin"));
+                    lista.add(p);
+                }
+
+            } catch (SQLException e) {
+                System.out.println("Error al listar periodos académicos: " + e.getMessage());
+            }
+            return lista;
+        }
+
 }
 
 
