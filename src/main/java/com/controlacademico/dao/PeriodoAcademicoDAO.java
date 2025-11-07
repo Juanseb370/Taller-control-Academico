@@ -69,6 +69,45 @@ public class PeriodoAcademicoDAO {
             return lista;
         }
 
+
+
+//-------------ELIMINAR
+
+        public boolean eliminarPeriodoAcademico(int periodoId) {
+            String sql = "DELETE FROM periodos_academicos WHERE periodo_academico_id = ?";
+            try (Connection con = ConexionBD.conectar();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setInt(1, periodoId);
+                int filas = ps.executeUpdate();
+                return filas > 0;
+            } catch (Exception e) {
+                System.out.println(" Error al eliminar periodo académico: " + e.getMessage());
+                return false;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 

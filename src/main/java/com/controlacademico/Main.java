@@ -7,12 +7,32 @@ import java.sql.Date;
 public class Main {
     public static void main(String[] args) {
 
+
+///--------------------------------------ESTA ES LA CRIPTONITA PARA ELIMINAR TODOS LOS REGISTROS
+
+        // //Esto eliminará TODOS los datos de la base de datos
+        // System.out.println(" INICIANDO LIMPIEZA DE LA BASE DE DATOS...");
+        // LimpiarBDDAO.eliminarTodosLosRegistros();
+        // System.out.println(" LIMPIEZA FINALIZADA.");
+    
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+        //--------------------------------------------------------------------------------------------------------------------------------------------
+
+        //-------------------------------------- INSERTAR INFORMACIÓN EN LA BASE DE DATOS --------------------------------------
+
         //---------------------------  INSERTAR ESTUDIANTE ---------------------------------
         Estudiante nuevoEstudiante = new Estudiante();
-        nuevoEstudiante.setIdentificacion("1025478985");
+        nuevoEstudiante.setIdentificacion("1005872947");
         nuevoEstudiante.setNombre("Juan Almendra");
-        nuevoEstudiante.setCorreoInstitucional("almendra@estudiante.uniajc.edu.co");
-        nuevoEstudiante.setCorreoPersonal("almendra2@gmail.com");
+        nuevoEstudiante.setCorreoInstitucional("ALMENDRA@estudiante.uniajc.edu.co");
+        nuevoEstudiante.setCorreoPersonal("almendra@gmail.com");
         nuevoEstudiante.setTelefono("3225973565");
         nuevoEstudiante.setEsVocero(false);
         nuevoEstudiante.setComentarios("estudiante de cuarto semestre.");
@@ -32,10 +52,10 @@ public class Main {
         //---------------------------  INSERTAR DOCENTE ---------------------------------
         Docente nuevoDocente = new Docente();
         nuevoDocente.setNombreDocente("JUAN PEREZ GOMEZ");
-        nuevoDocente.setIdentificacion("7410215489");
+        nuevoDocente.setIdentificacion("98132654");
         nuevoDocente.setTipoIdentificacion("CC");
         nuevoDocente.setGenero("masculino");
-        nuevoDocente.setCorreo("JPGPRUEBAFINAL.gomez@uniajc.edu.co");
+        nuevoDocente.setCorreo("JPG.gomez@uniajc.edu.co");
         nuevoDocente.setTituloEstudios("Ingeniería de Sistemas");
         nuevoDocente.setIdiomas("Inglés");
         nuevoDocente.setCertificaciones("Oracle Java SE 11");
@@ -150,8 +170,6 @@ public class Main {
 
             //--------------------------------------------------------------------------------------------
 
-          
- 
   
             //--------------------------- INSERTAR CALIFICACIÓN ---------------------------------
             Calificacion nuevaCalificacion = new Calificacion();
@@ -169,11 +187,7 @@ public class Main {
                 System.out.println(" No se pudo insertar la calificación.");
             }
 
-
-
 //-------------------------------------------------------------------
-
-
 
             //--------------------------- INSERTAR ASISTENCIA ---------------------------------
 
@@ -252,6 +266,38 @@ public class Main {
                         " | Curso ID: " + asis.getCursoId() + " | Estado: " + asis.getEstadoAsistencia() +
                         " | Fecha: " + asis.getFechaClase());
             }
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            // ELIMINAR INFORMACIÓN DE LA BASE DE DATOS
+
+
+
+            
+
+
+   
+
+        //Esto eliminará TODOS los datos de la base de datos
+        // System.out.println(" INICIANDO LIMPIEZA DE LA BASE DE DATOS...");
+        // LimpiarBDDAO.eliminarTodosLosRegistros();
+        // System.out.println(" LIMPIEZA FINALIZADA.");
+    
+
+
+             
+
+
+
+
+
+
+
+
+
 
 
 

@@ -114,6 +114,22 @@ public class DocenteDAO {
 
 
 
+    //---------------ELIMINAR
+
+            public boolean eliminarDocente(int docenteId) {
+            String sql = "DELETE FROM docentes WHERE docente_id = ?";
+            try (Connection con = ConexionBD.conectar();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setInt(1, docenteId);
+                int filas = ps.executeUpdate();
+                return filas > 0;
+            } catch (Exception e) {
+                System.out.println(" Error al eliminar docente: " + e.getMessage());
+                return false;
+            }
+        }
+
+
 
 
 

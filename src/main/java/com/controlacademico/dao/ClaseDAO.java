@@ -64,4 +64,22 @@ public class ClaseDAO {
         return lista;
     }
 
+
+
+    //-----------------ELIMINAR
+
+            public boolean eliminarClase(int claseId) {
+            String sql = "DELETE FROM clases WHERE clase_id = ?";
+            try (Connection con = ConexionBD.conectar();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setInt(1, claseId);
+                int filas = ps.executeUpdate();
+                return filas > 0;
+            } catch (Exception e) {
+                System.out.println(" Error al eliminar clase: " + e.getMessage());
+                return false;
+            }
+        }
+
+
 }

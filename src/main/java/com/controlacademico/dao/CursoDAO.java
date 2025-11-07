@@ -41,8 +41,7 @@ public class CursoDAO {
         return idGenerado;
     }
 
-
-            //---------------LISTAR
+//---------------LISTAR
 
 
             public List<Curso> listarCursos() {
@@ -69,6 +68,20 @@ public class CursoDAO {
                 return lista;
             }
 
+//------------------ ELIMINAR
+
+            public boolean eliminarCurso(int cursoId) {
+                String sql = "DELETE FROM cursos WHERE curso_id = ?";
+                try (Connection con = ConexionBD.conectar();
+                    PreparedStatement ps = con.prepareStatement(sql)) {
+                    ps.setInt(1, cursoId);
+                    int filas = ps.executeUpdate();
+                    return filas > 0;
+                } catch (Exception e) {
+                    System.out.println(" Error al eliminar curso: " + e.getMessage());
+                    return false;
+                }
+            }
 
 
 }

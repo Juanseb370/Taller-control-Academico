@@ -85,6 +85,21 @@ public class EstudianteDAO {
         }
 
 
+//----------------ELIMINAR
+
+
+            public boolean eliminarEstudiante(int estudianteId) {
+                String sql = "DELETE FROM estudiantes WHERE estudiante_id = ?";
+                try (Connection con = ConexionBD.conectar();
+                    PreparedStatement ps = con.prepareStatement(sql)) {
+                    ps.setInt(1, estudianteId);
+                    int filas = ps.executeUpdate();
+                    return filas > 0;
+                } catch (Exception e) {
+                    System.out.println(" Error al eliminar estudiante: " + e.getMessage());
+                    return false;
+                }
+            }
 
 
 
@@ -102,6 +117,22 @@ public class EstudianteDAO {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
 
 }
 

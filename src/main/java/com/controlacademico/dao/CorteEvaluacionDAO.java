@@ -70,4 +70,22 @@ import java.util.List;
     }
 
 
+
+    //------------------ ELIMINAR
+
+        public boolean eliminarCorteEvaluacion(int corteId) {
+        String sql = "DELETE FROM cortes_evaluacion WHERE corte_evaluacion_id = ?";
+        try (Connection con = ConexionBD.conectar();
+            PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, corteId);
+            int filas = ps.executeUpdate();
+            return filas > 0;
+        } catch (Exception e) {
+            System.out.println(" Error al eliminar corte de evaluación: " + e.getMessage());
+            return false;
+        }
+    }
+
+
+
 }

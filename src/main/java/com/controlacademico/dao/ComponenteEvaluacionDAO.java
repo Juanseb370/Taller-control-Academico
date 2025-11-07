@@ -67,4 +67,21 @@ public int insertarComponenteEvaluacionYObtenerid(ComponenteEvaluacion component
         return lista;
     }
 
+
+    //---------------ELIMINAR
+
+            public boolean eliminarComponenteEvaluacion(int componenteId) {
+            String sql = "DELETE FROM componentes_evaluacion WHERE componente_evaluacion_id = ?";
+            try (Connection con = ConexionBD.conectar();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setInt(1, componenteId);
+                int filas = ps.executeUpdate();
+                return filas > 0;
+            } catch (Exception e) {
+                System.out.println(" Error al eliminar componente de evaluación: " + e.getMessage());
+                return false;
+            }
+        }
+
+
 }

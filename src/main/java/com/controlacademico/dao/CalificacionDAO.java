@@ -66,4 +66,21 @@ public class CalificacionDAO {
         return lista;
     }
 
+    //----------------ELIMINAR
+
+
+            public boolean eliminarCalificacion(int calificacionId) {
+            String sql = "DELETE FROM calificaciones WHERE calificacion_id = ?";
+            try (Connection con = ConexionBD.conectar();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setInt(1, calificacionId);
+                int filas = ps.executeUpdate();
+                return filas > 0;
+            } catch (Exception e) {
+                System.out.println(" Error al eliminar calificación: " + e.getMessage());
+                return false;
+            }
+        }
+
+
 }

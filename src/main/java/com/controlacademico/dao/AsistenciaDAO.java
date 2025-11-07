@@ -68,4 +68,22 @@ public class AsistenciaDAO {
         return lista;
     }
 
+
+    //--------------------ELIMINAR
+
+            public boolean eliminarAsistencia(int asistenciaId) {
+            String sql = "DELETE FROM asistencias WHERE asistencia_id = ?";
+            try (Connection con = ConexionBD.conectar();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setInt(1, asistenciaId);
+                int filas = ps.executeUpdate();
+                return filas > 0;
+            } catch (Exception e) {
+                System.out.println(" Error al eliminar asistencia: " + e.getMessage());
+                return false;
+            }
+        }
+
+
+
 }
