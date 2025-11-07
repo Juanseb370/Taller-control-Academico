@@ -9,25 +9,7 @@ import java.sql.ResultSet;
 
 public class CursoDAO {
 
-// public boolean insertarCurso(Curso curso) {
-//     String sql = "INSERT INTO cursos (nombre_curso, descripcion_curso, periodo_academico_id, docente_id) VALUES (?, ?, ?, ?)";
-//     boolean insertado = false;
 
-//     try (Connection con = ConexionBD.conectar();
-//          PreparedStatement stmt = con.prepareStatement(sql)) {
-//         stmt.setString(1, curso.getNombreCurso());
-//         stmt.setString(2, curso.getDescripcionCurso());
-//         stmt.setInt(3, curso.getPeriodoAcademicoId());
-//         stmt.setInt(4, curso.getDocenteId());
-
-//         insertado = stmt.executeUpdate() > 0;
-//     } catch (Exception e) {
-//         e.printStackTrace();
-//     }
-
-//     return insertado;
-// }
-// }
 
 
 public int insertarCursoYObtenerId(Curso curso) {

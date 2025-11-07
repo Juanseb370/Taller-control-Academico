@@ -2,6 +2,7 @@ package com.controlacademico;
 
 import com.controlacademico.dao.*;
 import com.controlacademico.modelo.*;
+import com.mysql.cj.x.protobuf.MysqlxCrud.Insert;
 
 import java.sql.Date;
 
@@ -10,10 +11,10 @@ public class Main {
 
         //---------------------------  INSERTAR ESTUDIANTE ---------------------------------
         Estudiante nuevoEstudiante = new Estudiante();
-        nuevoEstudiante.setIdentificacion("1005872948");
+        nuevoEstudiante.setIdentificacion("82957412");
         nuevoEstudiante.setNombre("Juan Sebastian Almendra Pechene");
-        nuevoEstudiante.setCorreoInstitucional("Jsalmendra@estudiante.uniajc.edu.co");
-        nuevoEstudiante.setCorreoPersonal("juan370@gmail.com");
+        nuevoEstudiante.setCorreoInstitucional("dasda20015@estudiante.uniajc.edu.co");
+        nuevoEstudiante.setCorreoPersonal("dasdas021415@gmail.com");
         nuevoEstudiante.setTelefono("3225973565");
         nuevoEstudiante.setEsVocero(false);
         nuevoEstudiante.setComentarios("estudiante de cuarto semestre.");
@@ -32,17 +33,19 @@ public class Main {
 
         //---------------------------  INSERTAR DOCENTE ---------------------------------
         Docente nuevoDocente = new Docente();
-        nuevoDocente.setNombreDocente("Laura Gómez");
-        nuevoDocente.setIdentificacion("123456789");
+        nuevoDocente.setNombreDocente("feli gomez");
+        nuevoDocente.setIdentificacion("952013516");
         nuevoDocente.setTipoIdentificacion("CC");
         nuevoDocente.setGenero("Femenino");
-        nuevoDocente.setCorreo("laura.gomez@uniajc.edu.co");
+        nuevoDocente.setCorreo("dasdasd.gomez@uniajc.edu.co");
         nuevoDocente.setTituloEstudios("Ingeniería de Sistemas");
         nuevoDocente.setIdiomas("Inglés");
         nuevoDocente.setCertificaciones("Oracle Java SE 11");
 
         DocenteDAO daoDocente = new DocenteDAO();
         int idDocenteGenerado = daoDocente.insertarDocente(nuevoDocente);
+
+
 
         //---------------------------  INSERTAR PERIODO ACADÉMICO ---------------------------------
         PeriodoAcademico nuevoPeriodo = new PeriodoAcademico();
@@ -53,6 +56,9 @@ public class Main {
         PeriodoAcademicoDAO daoPeriodo = new PeriodoAcademicoDAO();
         int idPeriodoGenerado = daoPeriodo.insertarPeriodoAcademico(nuevoPeriodo);
 
+
+
+
         //---------------------------  INSERTAR CURSO ---------------------------------
         Curso nuevoCurso = new Curso();
         nuevoCurso.setNombreCurso("Programación Orientada a Objetos");
@@ -62,6 +68,10 @@ public class Main {
 
         CursoDAO daoCurso = new CursoDAO();
         int idCursoGenerado = daoCurso.insertarCursoYObtenerId(nuevoCurso); //  ahora este método devuelve el ID del curso
+
+
+
+
 
         //---------------------------  METODO PARA QUE SE INSERTEN AUTOMATICAMENTE LOS IDS DE DOCENTE Y CURSO EN LA TABLA DOCENTE CURSO ---------------------------------
         DocenteCurso relacionDocentesCursos = new DocenteCurso();
@@ -79,6 +89,71 @@ public class Main {
 
 
 
+        
+
+
+            //---------------------------- METODO PARA INSERTAR CLASE EN LA BASE DE DATOS ---------------------------------
+
+            Clases nuevaClases = new Clases();
+            nuevaClases.setCursoId(idCursoGenerado); // Usar el ID del curso recién insertado
+            nuevaClases.setNumeroClase(1);
+            nuevaClases.setFechaClase(Date.valueOf("2025-03-01"));
+            nuevaClases.setTemaClase("Introducción a la Programación Orientada a Objetos");
+            nuevaClases.setDescripcionClase("Explicación de los principios básicos de la POO: clases, objetos, herencia y polimorfismo.");
+            nuevaClases.setComentariosClase("Los estudiantes mostraron buen interés."); 
+            ClaseDAO daoClase = new ClaseDAO();
+            boolean insertadoClase = daoClase.insertarClase(nuevaClases);
+
+         
+
+            if (insertadoClase) {
+                System.out.println(" Clase Insertada Correctamente.");
+            } else {
+                System.out.println(" No se pudo insertar la Clase.");
+            }
+            
+
+
+            //------------------------------METODO PARA INSERTAR CORTE DE EVALUACIÓN EN LA BASE DE DATOS ---------------------------------
+            CorteEvaluacion nuevoCorte = new CorteEvaluacion();
+            nuevoCorte.setCursoId(idCursoGenerado);             // Usar el ID del curso recién insertado
+            nuevoCorte.setPeriodoAcademicoId(idPeriodoGenerado);   // Usar el ID del periodo recién insertado
+            nuevoCorte.setNombreCorte("Primer Corte");
+            nuevoCorte.setPorcentaje(30.0);
+            nuevoCorte.setComentariosCorte("Evaluación de la primera mitad del curso.");
+
+            CorteEvaluacionDAO daoCorte = new CorteEvaluacionDAO();
+            
+            int idCortegenerado = daoCorte.insertarCorteEvaluacionYObtenerId(nuevoCorte);
+           
+            if (idCortegenerado != -1) {
+                System.out.println(" Corte de evaluación insertado correctamente.");
+            } else {
+                System.out.println(" No se pudo insertar el corte de evaluación.");
+            }
+
+
+
+            //---------------------------METODO PARA INSERTAR COMPONENTE DE EVALUACIÓN EN LA BASE DE DATOS con EL ID DEL CORTE RECIÉN INSERTADO---------------------------------
+            ComponenteEvaluacion nuevoComponente = new ComponenteEvaluacion();
+            // Usar el ID del corte de evaluación recién insertado
+            nuevoComponente.setCorteEvaluacionId(idCortegenerado); // ID del corte existente
+            nuevoComponente.setNombreComponente("Examen Parcial");
+            nuevoComponente.setPorcentaje(40.0);   
+            ComponenteEvaluacionDAO daoComponente = new ComponenteEvaluacionDAO();
+            boolean insertadoComponente = daoComponente.insertarComponenteEvaluacion(nuevoComponente);
+
+            
+            if (insertadoComponente) {
+                System.out.println(" Componente de evaluación insertado correctamente.");
+            } else {
+                System.out.println(" No se pudo insertar el componente de evaluación.");
+            }
+
+
+
+   }
+}
 
 
 
@@ -103,82 +178,7 @@ public class Main {
 
 
 
-
-
-
-
-
-
-
-
-
-
-//         
-//         
-
-
-
-//         //---------------------------  INSERTAR CLASE ---------------------------------
-//         Clases nuevaClase = new Clases();
-//             nuevaClase.setCursoId(28); // ID de curso existente
-//             nuevaClase.setNumeroClase(1);
-//             nuevaClase.setFechaClase(Date.valueOf("2025-11-01"));
-//             nuevaClase.setTemaClase("Introducción a la Programación Orientada a Objetos");
-//             nuevaClase.setDescripcionClase("Explicación de los principios básicos de la POO: clases, objetos, herencia y polimorfismo.");
-//             nuevaClase.setComentariosClase("Los estudiantes mostraron buen interés.");
-
-//             ClaseDAO daoClase = new ClaseDAO();
-//                 boolean insertadoClase = daoClase.insertarClase(nuevaClase);
-
-//                 if (insertadoClase) {
-//                         System.out.println(" Clase insertada correctamente.");
-//                 } else {
-//                         System.out.println(" No se pudo insertar la clase.");
-//                 }
-
-
-
-
-// //---------------------------  INSERTAR CORTE DE EVALUACIÓN ---------------------------------
-
-
-//         CorteEvaluacion nuevoCorte = new CorteEvaluacion();
-//         nuevoCorte.setCursoId(28);             // ID del curso existente
-//         nuevoCorte.setPeriodoAcademicoId(3);   // ID del periodo existente
-//         nuevoCorte.setNombreCorte("Primer Corte");
-//         nuevoCorte.setPorcentaje(30.0);
-//         nuevoCorte.setComentariosCorte("Evaluación de la primera mitad del curso.");
-
-//         CorteEvaluacionDAO daoCorte = new CorteEvaluacionDAO();
-//         boolean insertadoCorte = daoCorte.insertarCorteEvaluacion(nuevoCorte);
-
-//         if (insertadoCorte) {
-//             System.out.println(" Corte de evaluación insertado correctamente.");
-//         } else {
-//             System.out.println(" No se pudo insertar el corte de evaluación.");
-//         }
-
-
-//         //---------------------------  INSERTAR COMPONENTE DE EVALUACIÓN ---------------------------------
-//         ComponenteEvaluacion nuevoComponente = new ComponenteEvaluacion();
-
-//         // Usar el ID del corte de evaluación recién insertado
-
-
-
-//         nuevoComponente.setCorteEvaluacionId(10); // ID del corte existente
-//         nuevoComponente.setNombreComponente("Examen Parcial");
-//         nuevoComponente.setPorcentaje(40.0);
-
-//         ComponenteEvaluacionDAO daoComponente = new ComponenteEvaluacionDAO();
-//         boolean insertadoComponente = daoComponente.insertarComponenteEvaluacion(nuevoComponente);
-
-//         if (insertadoComponente) {
-//             System.out.println(" Componente de evaluación insertado correctamente.");
-//         } else {
-//             System.out.println(" No se pudo insertar el componente de evaluación.");
-//         }
-
+//        
 
 //         //---------------------------  INSERTAR CALIFICACIÓN ---------------------------------
 //         Calificacion nuevaCalificacion = new Calificacion();
@@ -232,9 +232,7 @@ public class Main {
 //-------------------------------------------------------------------------------------FIN COMENTAR-----------------------------------------------------
 
 
-    }
-}
-
+ 
 
 
 
