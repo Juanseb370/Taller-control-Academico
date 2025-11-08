@@ -85,7 +85,7 @@ public class VentanaPrincipal extends JFrame {
         
         try {
             if (iconName != null) {
-                // Comentado para evitar error de compilación por falta de recursos
+                
                 // btn.setIcon(new ImageIcon(getClass().getResource("/icons/" + iconName + ".png")));
             }
         } catch (Exception e) { /* Ignorar si el icono no carga */ }
@@ -107,7 +107,7 @@ public class VentanaPrincipal extends JFrame {
 
         scroll.setBorder(BorderFactory.createEmptyBorder());
         scroll.getViewport().setBackground(COLOR_CARD_BG);
-        // scroll.getViewport().setBorder(BorderFactory.createLineBorder(COLOR_BORDER, 1));
+        
         scroll.setBorder(BorderFactory.createLineBorder(COLOR_BORDER, 1));
     }
 
@@ -927,7 +927,7 @@ public class VentanaPrincipal extends JFrame {
             
             txtFecha.setForeground(Color.BLACK);
             txtTema.setForeground(Color.BLACK);
-            // Comentarios/Descripción requieren buscar el objeto completo.
+            
         });
 
         return panel;
@@ -1435,13 +1435,13 @@ public class VentanaPrincipal extends JFrame {
             consultaPanel.add(comboTablas);
             consultaPanel.add(btnConsultarDetallado);
             
-            // --- Panel de Mantenimiento Original ---
+            // --- Panel de Mantenimiento---
             JPanel mantenimientoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
             JButton btnLimpiar = createStyledButton(" Limpiar Todos los Registros", "delete_white");
             
             mantenimientoPanel.add(btnLimpiar);
 
-            // Agregamos ambos paneles de botones al controlPanel principal
+            // paneles de botones al controlPanel principal
             controlPanel.add(createFormCard(consultaPanel, "Consultar Datos por Tabla"));
             controlPanel.add(createFormCard(mantenimientoPanel, "Acciones de Mantenimiento"));
 
@@ -1460,12 +1460,11 @@ public class VentanaPrincipal extends JFrame {
                 scroll.getVerticalScrollBar().setValue(0); // Volver al inicio
             });
 
-            // 2. Botón Limpiar (Manteniendo la lógica original)
+            // 2. Botón Limpiar
             btnLimpiar.addActionListener(e -> {
                 txt.setText("");
                 txt.append("Limpiando base de datos...\n");
-                // Asegúrate de que LimpiarBDDAO.eliminarTodosLosRegistros() esté disponible
-                // try { LimpiarBDDAO.eliminarTodosLosRegistros(); } catch (Exception ex) { txt.append("Error en limpieza: " + ex.getMessage()); }
+                
                 txt.append("Limpieza completa (Llamada al DAO comentada para prevenir errores si la clase no existe)\n");
             });
             
@@ -1580,7 +1579,7 @@ public class VentanaPrincipal extends JFrame {
                 }
             } catch (Exception ex) {
                 sb.append("ERROR al acceder a la base de datos para ").append(tabla).append(". Asegúrese de que la conexión sea válida.\nError: ").append(ex.getMessage()).append("\n");
-                // Nota: se recomienda dejar ex.printStackTrace() para depuración en desarrollo.
+                
             }
 
             return sb.toString();
