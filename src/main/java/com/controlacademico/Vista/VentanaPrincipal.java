@@ -14,7 +14,7 @@ import java.util.List;
 
 public class VentanaPrincipal extends JFrame {
 
-    // Constantes de Estilo mejoradas (Usando la última paleta)
+    
     private static final Font FONT_HEADER = new Font("Segoe UI", Font.BOLD, 18);
     private static final Font FONT_LABEL = new Font("Segoe UI", Font.BOLD, 13);
     private static final Font FONT_BODY = new Font("Segoe UI", Font.PLAIN, 12);
@@ -48,8 +48,9 @@ public class VentanaPrincipal extends JFrame {
         // Asignación de Paneles (Todos los métodos están ahora definidos)
         tabs.addTab("Estudiantes ", crearPanelEstudiantes());
         tabs.addTab("Docentes ", crearPanelDocentes());
-        tabs.addTab("Cursos ", crearPanelCursos());
         tabs.addTab("Periodos ", crearPanelPeriodos());
+        tabs.addTab("Cursos ", crearPanelCursos());
+        
         tabs.addTab("Clases ", crearPanelClases());
         tabs.addTab("Cortes ", crearPanelCortes());
         tabs.addTab("Componentes ", crearPanelComponentes());
@@ -61,7 +62,7 @@ public class VentanaPrincipal extends JFrame {
     }
     
     // -------------------------------------------------------------------------
-    // --- MÉTODOS DE ESTILO (Requeridos para que compile) ---
+    // --- MÉTODOS DE ESTILO ---
     // -------------------------------------------------------------------------
 
     private JButton createStyledButton(String text, String iconName) {
@@ -154,7 +155,7 @@ public class VentanaPrincipal extends JFrame {
     }
 
     // -------------------------------------------------------------------------------------------------------------------------
-    // --- PANEL ESTUDIANTES (Copia del código ya proporcionado) ---
+    // --- PANEL ESTUDIANTES  ---
     // -------------------------------------------------------------------------------------------------------------------------
     private JPanel crearPanelEstudiantes() {
         JPanel panel = new JPanel(new BorderLayout(15, 15));
@@ -226,7 +227,7 @@ public class VentanaPrincipal extends JFrame {
         JButton btnInsert = createStyledButton("Insertar", "add_white");
         JButton btnUpdate = createStyledButton("Actualizar", "edit_white"); 
         JButton btnDelete = createStyledButton("Eliminar", "delete_white"); 
-        JButton btnList = createStyledButton("Listar", "refresh_white");
+        JButton btnList = createStyledButton("Recargar Ventana", "refresh_white");
         botones.add(btnInsert); botones.add(btnUpdate); 
         botones.add(btnDelete); botones.add(btnList);
         
@@ -330,13 +331,13 @@ public class VentanaPrincipal extends JFrame {
                     comboGenero.setSelectedItem(full.getGenero());
                 }
             } catch (Exception ignore) {}
-        });
+        }); 
 
         return panel;
     }
     
     // -------------------------------------------------------------------------------------------------------------------------
-    // --- PANEL DOCENTES (Copia del código ya proporcionado) ---
+    // --- PANEL DOCENTES ---
     // -------------------------------------------------------------------------------------------------------------------------
 
     private JPanel crearPanelDocentes() {
@@ -404,7 +405,7 @@ public class VentanaPrincipal extends JFrame {
         JButton btnInsert = createStyledButton("Insertar", "add_white"); 
         JButton btnUpdate = createStyledButton("Actualizar", "edit_white"); 
         JButton btnDelete = createStyledButton("Eliminar", "delete_white"); 
-        JButton btnList = createStyledButton("Listar", "refresh_white");
+        JButton btnList = createStyledButton("Recargar Ventana", "refresh_white");
         botones.add(btnInsert); botones.add(btnUpdate); 
         botones.add(btnDelete); botones.add(btnList);
         controlPanel.add(botones);
@@ -558,7 +559,7 @@ public class VentanaPrincipal extends JFrame {
         JButton btnInsert = createStyledButton("Insertar", "add_white"); 
         JButton btnUpdate = createStyledButton("Actualizar", "edit_white"); 
         JButton btnDelete = createStyledButton("Eliminar", "delete_white"); 
-        JButton btnList = createStyledButton("Listar", "refresh_white");
+        JButton btnList = createStyledButton("Recargar Ventana", "refresh_white");
         botones.add(btnInsert); botones.add(btnUpdate); 
         botones.add(btnDelete); botones.add(btnList);
         controlPanel.add(botones);
@@ -703,7 +704,7 @@ public class VentanaPrincipal extends JFrame {
         JButton btnInsert=createStyledButton("Insertar", "add_white"); 
         JButton btnUpdate=createStyledButton("Actualizar", "edit_white"); 
         JButton btnDelete=createStyledButton("Eliminar", "delete_white"); 
-        JButton btnList=createStyledButton("Listar", "refresh_white"); 
+        JButton btnList=createStyledButton("Recargar Ventana", "refresh_white"); 
         botones.add(btnInsert); botones.add(btnUpdate); botones.add(btnDelete); botones.add(btnList);
         controlPanel.add(botones);
 
@@ -847,7 +848,7 @@ public class VentanaPrincipal extends JFrame {
         JButton btnInsert=createStyledButton("Insertar", "add_white"); 
         JButton btnUpdate=createStyledButton("Actualizar", "edit_white"); 
         JButton btnDelete=createStyledButton("Eliminar", "delete_white"); 
-        JButton btnList=createStyledButton("Listar", "refresh_white"); 
+        JButton btnList=createStyledButton("Recargar Ventana", "refresh_white"); 
         botones.add(btnInsert); botones.add(btnUpdate); botones.add(btnDelete); botones.add(btnList);
         controlPanel.add(botones);
 
@@ -985,7 +986,7 @@ public class VentanaPrincipal extends JFrame {
         JButton btnInsert=createStyledButton("Insertar", "add_white"); 
         JButton btnUpdate=createStyledButton("Actualizar", "edit_white"); 
         JButton btnDelete=createStyledButton("Eliminar", "delete_white"); 
-        JButton btnList=createStyledButton("Listar", "refresh_white"); 
+        JButton btnList=createStyledButton("Recargar Ventana", "refresh_white"); 
         botones.add(btnInsert); botones.add(btnUpdate); botones.add(btnDelete); botones.add(btnList);
         controlPanel.add(botones);
 
@@ -1103,7 +1104,7 @@ public class VentanaPrincipal extends JFrame {
         JButton btnInsert=createStyledButton("Insertar", "add_white"); 
         JButton btnUpdate=createStyledButton("Actualizar", "edit_white"); 
         JButton btnDelete=createStyledButton("Eliminar", "delete_white"); 
-        JButton btnList=createStyledButton("Listar", "refresh_white"); 
+        JButton btnList=createStyledButton("Recargar Ventana", "refresh_white"); 
         botones.add(btnInsert); botones.add(btnUpdate); botones.add(btnDelete); botones.add(btnList);
         controlPanel.add(botones);
 
@@ -1212,7 +1213,7 @@ public class VentanaPrincipal extends JFrame {
         JButton btnInsert=createStyledButton("Insertar", "add_white"); 
         JButton btnUpdate=createStyledButton("Actualizar", "edit_white"); 
         JButton btnDelete=createStyledButton("Eliminar", "delete_white"); 
-        JButton btnList=createStyledButton("Listar", "refresh_white"); 
+        JButton btnList=createStyledButton("Recargar Ventana", "refresh_white"); 
         botones.add(btnInsert); botones.add(btnUpdate); botones.add(btnDelete); botones.add(btnList);
         controlPanel.add(botones);
 
@@ -1330,7 +1331,7 @@ public class VentanaPrincipal extends JFrame {
         JButton btnInsert=createStyledButton("Insertar", "add_white"); 
         JButton btnUpdate=createStyledButton("Actualizar", "edit_white"); 
         JButton btnDelete=createStyledButton("Eliminar", "delete_white"); 
-        JButton btnList=createStyledButton("Listar", "refresh_white"); 
+        JButton btnList=createStyledButton("Recargar Ventana", "refresh_white"); 
         botones.add(btnInsert); botones.add(btnUpdate); botones.add(btnDelete); botones.add(btnList);
         controlPanel.add(botones);
 
@@ -1523,18 +1524,71 @@ public class VentanaPrincipal extends JFrame {
                         sb.append("--------------------------------------------------\n");
                     }
                     break;
-                // Aquí puedes añadir más casos para Clases, Cortes, Calificaciones, etc.
-                default:
-                    sb.append("Consulta no implementada para la tabla: ").append(tabla);
+
+                case "Clases":
+                    ClaseDAO cladao = new ClaseDAO();
+                    List<Clases> clases = cladao.listarClases();
+                    sb.append("Total de Registros: ").append(clases.size()).append("\n\n");
+                    for (Clases cl : clases) {
+                        sb.append(String.format("ID: %d | Curso ID: %d | No. Clase: %d\n", cl.getClaseId(), cl.getCursoId(), cl.getNumeroClase()));
+                        sb.append(String.format(" Fecha: %s | Tema: %s\n", cl.getFechaClase(), cl.getTemaClase().substring(0, Math.min(cl.getTemaClase().length(), 50)) + "..."));
+                        sb.append("--------------------------------------------------\n");
+                    }
+                    break;
+                case "Cortes":
+                    CorteEvaluacionDAO cedao = new CorteEvaluacionDAO();
+                    List<CorteEvaluacion> cortes = cedao.listarCortesEvaluacion();
+                    sb.append("Total de Registros: ").append(cortes.size()).append("\n\n");
+                    for (CorteEvaluacion ce : cortes) {
+                        sb.append(String.format("ID: %d | Curso ID: %d | Periodo ID: %d\n", ce.getCorteEvaluacionId(), ce.getCursoId(), ce.getPeriodoAcademicoId()));
+                        sb.append(String.format(" Nombre: %s | Porcentaje: %.2f%%\n", ce.getNombreCorte(), ce.getPorcentaje()));
+                        sb.append("--------------------------------------------------\n");
+                    }
+                    break;
+                case "Componentes":
+                    ComponenteEvaluacionDAO compdao = new ComponenteEvaluacionDAO();
+                    List<ComponenteEvaluacion> componentes = compdao.listarComponentesEvaluacion();
+                    sb.append("Total de Registros: ").append(componentes.size()).append("\n\n");
+                    for (ComponenteEvaluacion comp : componentes) {
+                        sb.append(String.format("ID: %d | Corte ID: %d\n", comp.getComponenteEvaluacionId(), comp.getCorteEvaluacionId()));
+                        sb.append(String.format(" Nombre: %s | Porcentaje: %.2f%%\n", comp.getNombreComponente(), comp.getPorcentaje()));
+                        sb.append("--------------------------------------------------\n");
+                    }
+                    break;
+                case "Calificaciones":
+                    CalificacionDAO caldao = new CalificacionDAO();
+                    List<Calificacion> calificaciones = caldao.listarCalificaciones();
+                    sb.append("Total de Registros: ").append(calificaciones.size()).append("\n\n");
+                    for (Calificacion cal : calificaciones) {
+                        sb.append(String.format("ID: %d | Estudiante ID: %d | Comp. ID: %d\n", cal.getCalificacionId(), cal.getEstudianteId(), cal.getComponenteEvaluacionId()));
+                        sb.append(String.format(" Nota: %.2f\n", cal.getNota()));
+                        sb.append("--------------------------------------------------\n");
+                    }
+                    break;
+                case "Asistencias":
+                    AsistenciaDAO asidao = new AsistenciaDAO();
+                    List<Asistencia> asistencias = asidao.listarAsistencias();
+                    sb.append("Total de Registros: ").append(asistencias.size()).append("\n\n");
+                    for (Asistencia a : asistencias) {
+                        sb.append(String.format("ID: %d | Estudiante ID: %d | Curso ID: %d\n", a.getAsistenciaId(), a.getEstudianteId(), a.getCursoId()));
+                        sb.append(String.format(" Fecha: %s | Estado: %s\n", a.getFechaClase(), a.getEstadoAsistencia()));
+                        sb.append("--------------------------------------------------\n");
+                    }
+                    break;
+                    default:
+                        sb.append("Consulta no implementada para la tabla: ").append(tabla);
+                }
+            } catch (Exception ex) {
+                sb.append("ERROR al acceder a la base de datos para ").append(tabla).append(". Asegúrese de que la conexión sea válida.\nError: ").append(ex.getMessage()).append("\n");
+                // Nota: se recomienda dejar ex.printStackTrace() para depuración en desarrollo.
             }
-        } catch (Exception ex) {
-            sb.append("ERROR al acceder a la base de datos para ").append(tabla).append(": ").append(ex.getMessage()).append("\n");
-            ex.printStackTrace(); // Imprime el error completo para depuración
+
+            return sb.toString();
         }
 
-        return sb.toString();
-    }
 
+
+           
 
 
     // ---------------------- MAIN ----------------------
