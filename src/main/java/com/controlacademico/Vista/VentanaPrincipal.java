@@ -12,13 +12,7 @@ import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.List;
 
-/**
- * VentanaPrincipal - Interfaz Swing completa con pestañas para CRUD de todas las entidades.
- * Guardar en: src/com/controlacademico/vista/VentanaPrincipal.java
- * Requiere que tus DAOs (EstudianteDAO, DocenteDAO, CursoDAO, ClaseDAO, CorteEvaluacionDAO,
- * ComponenteEvaluacionDAO, CalificacionDAO, AsistenciaDAO, DocenteCursoDAO, PeriodoAcademicoDAO)
- * tengan los métodos insertar..., listar..., actualizar..., eliminar... como en la conversación.
- */
+
 public class VentanaPrincipal extends JFrame {
 
     public VentanaPrincipal() {
