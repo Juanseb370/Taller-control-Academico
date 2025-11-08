@@ -1402,57 +1402,139 @@ public class VentanaPrincipal extends JFrame {
     // -------------------------------------------------------------------------------------------------------------------------
     // --- IMPLEMENTACIÓN: PANEL HERRAMIENTAS ---
     // -------------------------------------------------------------------------------------------------------------------------
-    private JPanel crearPanelHerramientas() {
-        JPanel panel = new JPanel(new BorderLayout(15, 15));
-        panel.setBorder(new EmptyBorder(15, 15, 15, 15));
-        panel.setBackground(COLOR_BACKGROUND);
+    
 
-        JTextArea txt = new JTextArea();
-        txt.setEditable(false);
-        txt.setFont(FONT_BODY.deriveFont(14f));
-        JScrollPane scroll = new JScrollPane(txt);
-        scroll.setBorder(BorderFactory.createLineBorder(COLOR_BORDER));
+        private JPanel crearPanelHerramientas() {
+            JPanel panel = new JPanel(new BorderLayout(15, 15));
+            panel.setBorder(new EmptyBorder(15, 15, 15, 15));
+            panel.setBackground(COLOR_BACKGROUND);
 
-        JPanel controlPanel = new JPanel();
-        controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
-        controlPanel.setOpaque(false);
-        
-        // Contenedor interno para los botones
-        JPanel botones = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
-        botones.setOpaque(false);
-        JButton btnLimpiar = createStyledButton(" Limpiar Todos los Registros", "delete_white");
-        JButton btnListarTotales = createStyledButton(" Mostrar Toda la Información", "refresh_white");
+            JTextArea txt = new JTextArea();
+            txt.setEditable(false);
+            txt.setFont(FONT_BODY.deriveFont(14f));
+            JScrollPane scroll = new JScrollPane(txt);
+            scroll.setBorder(BorderFactory.createLineBorder(COLOR_BORDER));
 
-        botones.add(btnLimpiar);
-        botones.add(btnListarTotales);
-        
-        controlPanel.add(createFormCard(botones, "Acciones de Mantenimiento"));
+            JPanel controlPanel = new JPanel();
+            controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
+            controlPanel.setOpaque(false);
+            
+            // --- Nuevo Panel de Consulta Detallada ---
+            JPanel consultaPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+            JComboBox<String> comboTablas = new JComboBox<>(new String[]{
+                "Estudiantes", "Docentes", "Cursos", "Periodos", 
+                "Clases", "Cortes", "Componentes", "Calificaciones", "Asistencias"
+            });
+            comboTablas.setFont(FONT_BODY.deriveFont(13f));
+            comboTablas.setPreferredSize(new Dimension(150, 35));
+            
+            JButton btnConsultarDetallado = createStyledButton("Consultar Tabla", "refresh_white");
+            
+            consultaPanel.add(new JLabel("Seleccionar Tabla:"));
+            consultaPanel.add(comboTablas);
+            consultaPanel.add(btnConsultarDetallado);
+            
+            // --- Panel de Mantenimiento Original ---
+            JPanel mantenimientoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+            JButton btnLimpiar = createStyledButton(" Limpiar Todos los Registros", "delete_white");
+            
+            mantenimientoPanel.add(btnLimpiar);
 
-        panel.add(controlPanel, BorderLayout.NORTH);
-        panel.add(scroll, BorderLayout.CENTER);
+            // Agregamos ambos paneles de botones al controlPanel principal
+            controlPanel.add(createFormCard(consultaPanel, "Consultar Datos por Tabla"));
+            controlPanel.add(createFormCard(mantenimientoPanel, "Acciones de Mantenimiento"));
 
-        // NOTA: LimpiarBDDAO debe existir en el paquete com.controlacademico.dao
-        btnLimpiar.addActionListener(e -> {
-            txt.append("Limpiando base de datos...\n");
-            // Se asume la existencia de la clase y método estático
-            // LimpiarBDDAO.eliminarTodosLosRegistros(); 
-            txt.append("Limpieza completa (Llamada al DAO comentada para prevenir errores si la clase no existe)\n");
-        });
+            panel.add(controlPanel, BorderLayout.NORTH);
+            panel.add(scroll, BorderLayout.CENTER);
 
-        btnListarTotales.addActionListener(e -> {
-            txt.setText("Totales:\n");
-            // Se asumen que los DAOs tienen un método listarXXX() que devuelve List<XXX>
-            txt.append("Estudiantes: " + new EstudianteDAO().listarEstudiantes().size() + "\n");
-            txt.append("Docentes: " + new DocenteDAO().listarDocentes().size() + "\n");
-            txt.append("Cursos: " + new CursoDAO().listarCursos().size() + "\n");
-            txt.append("Clases: " + new ClaseDAO().listarClases().size() + "\n");
-            txt.append("Calificaciones: " + new CalificacionDAO().listarCalificaciones().size() + "\n");
-            txt.append("Asistencias: " + new AsistenciaDAO().listarAsistencias().size() + "\n");
-            txt.append("Periodos Académicos: " + new PeriodoAcademicoDAO().listarPeriodos().size() + "\n");
-        });
+            // ------------------------------------
+            // Lógica de Eventos de Herramientas
+            // ------------------------------------
 
-        return panel;
+            // 1. Botón Consultar Detallado
+            btnConsultarDetallado.addActionListener(e -> {
+                String tablaSeleccionada = (String) comboTablas.getSelectedItem();
+                String datos = consultarYFormatearDatos(tablaSeleccionada);
+                txt.setText(datos);
+                scroll.getVerticalScrollBar().setValue(0); // Volver al inicio
+            });
+
+            // 2. Botón Limpiar (Manteniendo la lógica original)
+            btnLimpiar.addActionListener(e -> {
+                txt.setText("");
+                txt.append("Limpiando base de datos...\n");
+                // Asegúrate de que LimpiarBDDAO.eliminarTodosLosRegistros() esté disponible
+                // try { LimpiarBDDAO.eliminarTodosLosRegistros(); } catch (Exception ex) { txt.append("Error en limpieza: " + ex.getMessage()); }
+                txt.append("Limpieza completa (Llamada al DAO comentada para prevenir errores si la clase no existe)\n");
+            });
+            
+            return panel;
+        }
+
+
+
+        // CONSULTAR DATOS
+
+        private String consultarYFormatearDatos(String tabla) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("==================================================\n");
+            sb.append("CONSULTA DETALLADA: ").append(tabla.toUpperCase()).append("\n");
+            sb.append("==================================================\n");
+
+        try {
+            switch (tabla) {
+                case "Estudiantes":
+                    EstudianteDAO edao = new EstudianteDAO();
+                    List<Estudiante> estudiantes = edao.listarEstudiantes();
+                    sb.append("Total de Registros: ").append(estudiantes.size()).append("\n\n");
+                    for (Estudiante e : estudiantes) {
+                        sb.append(String.format("ID: %d | Nombre: %s | Ident: %s\n", e.getEstudianteId(), e.getNombre(), e.getIdentificacion()));
+                        sb.append(String.format(" Correo Inst: %s | Teléfono: %s | Género: %s\n", e.getCorreoInstitucional(), e.getTelefono(), e.getGenero()));
+                        sb.append("--------------------------------------------------\n");
+                    }
+                    break;
+                case "Docentes":
+                    DocenteDAO ddao = new DocenteDAO();
+                    List<Docente> docentes = ddao.listarDocentes();
+                    sb.append("Total de Registros: ").append(docentes.size()).append("\n\n");
+                    for (Docente d : docentes) {
+                        sb.append(String.format("ID: %d | Nombre: %s | Ident: %s\n", d.getDocenteId(), d.getNombreDocente(), d.getIdentificacion()));
+                        sb.append(String.format(" Correo: %s | Título: %s | Idiomas: %s\n", d.getCorreo(), d.getTituloEstudios(), d.getIdiomas()));
+                        sb.append("--------------------------------------------------\n");
+                    }
+                    break;
+                case "Cursos":
+                    CursoDAO cdao = new CursoDAO();
+                    List<Curso> cursos = cdao.listarCursos();
+                    sb.append("Total de Registros: ").append(cursos.size()).append("\n\n");
+                    for (Curso c : cursos) {
+                        sb.append(String.format("ID: %d | Nombre: %s \n", c.getCursoId(), c.getNombreCurso()));
+                        sb.append(String.format(" Periodo ID: %d | Docente ID: %d | Descripción: %s\n", c.getPeriodoAcademicoId(), c.getDocenteId(), c.getDescripcionCurso()));
+                        sb.append("--------------------------------------------------\n");
+                    }
+                    break;
+                case "Periodos":
+                    PeriodoAcademicoDAO pdao = new PeriodoAcademicoDAO();
+                    List<PeriodoAcademico> periodos = pdao.listarPeriodos();
+                    sb.append("Total de Registros: ").append(periodos.size()).append("\n\n");
+                    for (PeriodoAcademico p : periodos) {
+                        sb.append(String.format("ID: %d | Nombre: %s\n", p.getPeriodoAcademicoId(), p.getNombrePeriodo()));
+                        sb.append(String.format(" Fechas: %s hasta %s\n", p.getFechaInicio(), p.getFechaFin()));
+                        sb.append("--------------------------------------------------\n");
+                    }
+                    break;
+                // Aquí puedes añadir más casos para Clases, Cortes, Calificaciones, etc.
+                default:
+                    sb.append("Consulta no implementada para la tabla: ").append(tabla);
+            }
+        } catch (Exception ex) {
+            sb.append("ERROR al acceder a la base de datos para ").append(tabla).append(": ").append(ex.getMessage()).append("\n");
+            ex.printStackTrace(); // Imprime el error completo para depuración
+        }
+
+        return sb.toString();
     }
+
 
 
     // ---------------------- MAIN ----------------------
