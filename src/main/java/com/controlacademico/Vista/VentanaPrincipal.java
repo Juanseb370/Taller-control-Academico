@@ -84,7 +84,8 @@ public class VentanaPrincipal extends JFrame {
         JButton btnUpdate = new JButton("Actualizar");
         JButton btnDelete = new JButton("Eliminar");
         JButton btnList = new JButton("Listar");
-        botones.add(btnInsert); botones.add(btnUpdate); botones.add(btnDelete); botones.add(btnList);
+        botones.add(btnInsert); botones.add(btnUpdate); 
+        botones.add(btnDelete); botones.add(btnList);
 
         panel.add(form, BorderLayout.NORTH);
         panel.add(scroll, BorderLayout.CENTER);
@@ -105,7 +106,8 @@ public class VentanaPrincipal extends JFrame {
                 est.setTipoDocumento(comboTipoDoc.getSelectedItem().toString());
                 est.setGenero(comboGenero.getSelectedItem().toString());
                 int id = dao.insertarEstudiante(est);
-                if(id!=-1) { JOptionPane.showMessageDialog(this,"Estudiante insertado con ID: "+id); btnList.doClick(); }
+                if(id!=-1) { JOptionPane.showMessageDialog(this,"Estudiante insertado con ID: "+id); 
+                btnList.doClick(); }
                 else JOptionPane.showMessageDialog(this,"Error al insertar estudiante","Error",JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex){ JOptionPane.showMessageDialog(this,ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);}        
         });
@@ -161,7 +163,12 @@ public class VentanaPrincipal extends JFrame {
             // The rest require fetching by id or from list - simplest: fetch full record
             try{
                 Estudiante full = dao.listarEstudiantes().stream().filter(x->x.getEstudianteId()==Integer.parseInt(txtId.getText())).findFirst().orElse(null);
-                if(full!=null){ txtCorreoPer.setText(full.getCorreoPersonal()); chkVocero.setSelected(full.isEsVocero()); txtComentarios.setText(full.getComentarios()); comboTipoDoc.setSelectedItem(full.getTipoDocumento()); comboGenero.setSelectedItem(full.getGenero()); }
+                if(full!=null){ 
+                    txtCorreoPer.setText(full.getCorreoPersonal()); 
+                    chkVocero.setSelected(full.isEsVocero()); 
+                    txtComentarios.setText(full.getComentarios()); 
+                    comboTipoDoc.setSelectedItem(full.getTipoDocumento()); 
+                    comboGenero.setSelectedItem(full.getGenero()); }
             }catch(Exception ignore){}
         });
 
@@ -193,32 +200,85 @@ public class VentanaPrincipal extends JFrame {
         form.add(new JLabel("Certificaciones:")); form.add(txtCerts);
 
         DefaultTableModel model = new DefaultTableModel(new String[]{"ID","Nombre","Identificación","Correo"},0){public boolean isCellEditable(int r,int c){return false;}};
-        JTable table = new JTable(model); JScrollPane scroll = new JScrollPane(table);
+        JTable table = new JTable(model);
+         JScrollPane scroll = new JScrollPane(table);
 
         JPanel botones = new JPanel();
-        JButton btnInsert = new JButton("Insertar"); JButton btnUpdate = new JButton("Actualizar"); JButton btnDelete = new JButton("Eliminar"); JButton btnList = new JButton("Listar");
-        botones.add(btnInsert); botones.add(btnUpdate); botones.add(btnDelete); botones.add(btnList);
+        JButton btnInsert = new JButton("Insertar"); 
+        JButton btnUpdate = new JButton("Actualizar"); 
+        JButton btnDelete = new JButton("Eliminar"); 
+        JButton btnList = new JButton("Listar");
+        botones.add(btnInsert); botones.add(btnUpdate); 
+        botones.add(btnDelete); botones.add(btnList);
 
-        panel.add(form,BorderLayout.NORTH); panel.add(scroll,BorderLayout.CENTER); panel.add(botones,BorderLayout.SOUTH);
+        panel.add(form,BorderLayout.NORTH); 
+        panel.add(scroll,BorderLayout.CENTER); 
+        panel.add(botones,BorderLayout.SOUTH);
 
         DocenteDAO dao = new DocenteDAO();
 
         btnInsert.addActionListener(e->{
             try{
                 Docente d = new Docente();
-                d.setNombreDocente(txtNombre.getText()); d.setIdentificacion(txtIdent.getText()); d.setCorreo(txtCorreo.getText()); d.setTipoIdentificacion(comboTipo.getSelectedItem().toString()); d.setGenero(comboGenero.getSelectedItem().toString()); d.setTituloEstudios(txtTitulo.getText()); d.setIdiomas(txtIdiomas.getText()); d.setCertificaciones(txtCerts.getText());
+                d.setNombreDocente(txtNombre.getText()); 
+                d.setIdentificacion(txtIdent.getText()); 
+                d.setCorreo(txtCorreo.getText()); 
+                d.setTipoIdentificacion(comboTipo.getSelectedItem().toString()); 
+                d.setGenero(comboGenero.getSelectedItem().toString()); 
+                d.setTituloEstudios(txtTitulo.getText()); 
+                d.setIdiomas(txtIdiomas.getText()); 
+                d.setCertificaciones(txtCerts.getText());
                 int id = dao.insertarDocente(d);
-                JOptionPane.showMessageDialog(this, id!=-1?"Docente insertado ID: "+id:"Error al insertar docente"); btnList.doClick();
+                JOptionPane.showMessageDialog(this, 
+                id!=-1?"Docente insertado ID: "+id:"Error al insertar docente"); 
+                btnList.doClick();
             }catch(Exception ex){ JOptionPane.showMessageDialog(this,ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);}        
         });
 
-        btnList.addActionListener(e->{ model.setRowCount(0); for(Docente d: dao.listarDocentes()) model.addRow(new Object[]{d.getDocenteId(), d.getNombreDocente(), d.getIdentificacion(), d.getCorreo()}); });
+        btnList.addActionListener(e->{ model.setRowCount(0); 
+            for(Docente d: dao.listarDocentes()) 
+            model.addRow(new Object[]{
+                d.getDocenteId(),
+                d.getNombreDocente(), 
+                d.getIdentificacion(),
+                d.getCorreo()}); });
 
-        btnDelete.addActionListener(e->{ int r=table.getSelectedRow(); if(r==-1){JOptionPane.showMessageDialog(this,"Seleccione fila");return;} int id=(int)model.getValueAt(r,0); boolean ok=dao.eliminarDocente(id); JOptionPane.showMessageDialog(this, ok?"Docente eliminado":"Error al eliminar"); btnList.doClick(); });
+        btnDelete.addActionListener(e->{ int r=table.getSelectedRow(); 
+            if(r==-1){JOptionPane.showMessageDialog(this,"Seleccione fila");return;} 
+            int id=(int)model.getValueAt(r,0); 
+            boolean ok=dao.eliminarDocente(id); 
+            JOptionPane.showMessageDialog(this, ok?"Docente eliminado":"Error al eliminar");
+            btnList.doClick(); });
 
-        btnUpdate.addActionListener(e->{ int r=table.getSelectedRow(); if(r==-1){JOptionPane.showMessageDialog(this,"Seleccione fila");return;} try{ int id=(int)model.getValueAt(r,0); Docente d=new Docente(); d.setDocenteId(id); d.setNombreDocente(txtNombre.getText()); d.setIdentificacion(txtIdent.getText()); d.setCorreo(txtCorreo.getText()); d.setTipoIdentificacion(comboTipo.getSelectedItem().toString()); d.setGenero(comboGenero.getSelectedItem().toString()); d.setTituloEstudios(txtTitulo.getText()); d.setIdiomas(txtIdiomas.getText()); d.setCertificaciones(txtCerts.getText()); boolean ok=dao.actualizarDocente(d); JOptionPane.showMessageDialog(this, ok?"Docente actualizado":"Error al actualizar"); btnList.doClick(); }catch(Exception ex){JOptionPane.showMessageDialog(this,ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);} });
+        btnUpdate.addActionListener(e->{ int r=table.getSelectedRow(); 
+            if(r==-1){JOptionPane.showMessageDialog(this,"Seleccione fila");return;} 
+            try{ int id=(int)model.getValueAt(r,0); 
+                Docente d=new Docente(); 
+                d.setDocenteId(id); 
+                d.setNombreDocente(txtNombre.getText()); 
+                d.setIdentificacion(txtIdent.getText()); 
+                d.setCorreo(txtCorreo.getText()); 
+                d.setTipoIdentificacion(comboTipo.getSelectedItem().toString()); 
+                d.setGenero(comboGenero.getSelectedItem().toString()); 
+                d.setTituloEstudios(txtTitulo.getText()); 
+                d.setIdiomas(txtIdiomas.getText()); 
+                d.setCertificaciones(txtCerts.getText()); 
+                boolean ok=dao.actualizarDocente(d); 
+                JOptionPane.showMessageDialog(this, ok?"Docente actualizado":"Error al actualizar"); 
+                btnList.doClick(); }catch(Exception ex){JOptionPane.showMessageDialog(this,ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);} });
 
-        table.getSelectionModel().addListSelectionListener(ev->{ int r=table.getSelectedRow(); if(r==-1) return; txtId.setText(String.valueOf(model.getValueAt(r,0))); txtNombre.setText(String.valueOf(model.getValueAt(r,1))); txtIdent.setText(String.valueOf(model.getValueAt(r,2))); txtCorreo.setText(String.valueOf(model.getValueAt(r,3))); try{ Docente full=dao.listarDocentes().stream().filter(x->x.getDocenteId()==Integer.parseInt(txtId.getText())).findFirst().orElse(null); if(full!=null){ comboTipo.setSelectedItem(full.getTipoIdentificacion()); comboGenero.setSelectedItem(full.getGenero()); txtTitulo.setText(full.getTituloEstudios()); txtIdiomas.setText(full.getIdiomas()); txtCerts.setText(full.getCertificaciones()); } }catch(Exception ignore){} });
+        table.getSelectionModel().addListSelectionListener(ev->{ int r=table.getSelectedRow(); 
+            if(r==-1) return; txtId.setText(String.valueOf(model.getValueAt(r,0))); 
+            txtNombre.setText(String.valueOf(model.getValueAt(r,1))); 
+            txtIdent.setText(String.valueOf(model.getValueAt(r,2))); 
+            txtCorreo.setText(String.valueOf(model.getValueAt(r,3))); 
+            try{ Docente full=dao.listarDocentes().stream().filter(x->x.getDocenteId()==Integer.parseInt(txtId.getText())).findFirst().orElse(null); 
+                if(full!=null){ comboTipo.setSelectedItem(full.getTipoIdentificacion()); 
+                    comboGenero.setSelectedItem(full.getGenero()); 
+                    txtTitulo.setText(full.getTituloEstudios()); 
+                    txtIdiomas.setText(full.getIdiomas()); 
+                    txtCerts.setText(full.getCertificaciones()); } 
+                }catch(Exception ignore){} });
 
         return panel;
     }
@@ -239,25 +299,79 @@ public class VentanaPrincipal extends JFrame {
         form.add(new JLabel("Periodo ID:")); form.add(comboPeriodo);
         form.add(new JLabel("Docente ID:")); form.add(comboDocente);
 
-        DefaultTableModel model = new DefaultTableModel(new String[]{"ID","Nombre","Periodo","Docente"},0){public boolean isCellEditable(int r,int c){return false;}};
-        JTable table = new JTable(model); JScrollPane scroll = new JScrollPane(table);
+        DefaultTableModel model = new DefaultTableModel(new String[]{"ID","Nombre","Periodo","Docente"},0){
+        public boolean isCellEditable(int r,int c){return false;}};
+        JTable table = new JTable(model); 
+        JScrollPane scroll = new JScrollPane(table);
 
-        JPanel botones = new JPanel(); JButton btnInsert=new JButton("Insertar"); JButton btnUpdate=new JButton("Actualizar"); JButton btnDelete=new JButton("Eliminar"); JButton btnList=new JButton("Listar"); botones.add(btnInsert); botones.add(btnUpdate); botones.add(btnDelete); botones.add(btnList);
+        JPanel botones = new JPanel(); 
+        JButton btnInsert=new JButton("Insertar"); 
+        JButton btnUpdate=new JButton("Actualizar"); 
+        JButton btnDelete=new JButton("Eliminar"); 
+        JButton btnList=new JButton("Listar"); 
+        botones.add(btnInsert); botones.add(btnUpdate); 
+        botones.add(btnDelete); botones.add(btnList);
 
-        panel.add(form,BorderLayout.NORTH); panel.add(scroll,BorderLayout.CENTER); panel.add(botones,BorderLayout.SOUTH);
+        panel.add(form,BorderLayout.NORTH); 
+        panel.add(scroll,BorderLayout.CENTER); 
+        panel.add(botones,BorderLayout.SOUTH);
 
-        CursoDAO dao = new CursoDAO(); PeriodoAcademicoDAO pdao = new PeriodoAcademicoDAO(); DocenteDAO ddao = new DocenteDAO();
+        CursoDAO dao = new CursoDAO(); 
+        PeriodoAcademicoDAO pdao = new PeriodoAcademicoDAO(); 
+        DocenteDAO ddao = new DocenteDAO();
 
         // cargar combos con IDs existentes
-        btnList.addActionListener(e->{ model.setRowCount(0); comboPeriodo.removeAllItems(); comboDocente.removeAllItems(); for(PeriodoAcademico p: pdao.listarPeriodos()) comboPeriodo.addItem(p.getPeriodoAcademicoId()); for(Docente d: ddao.listarDocentes()) comboDocente.addItem(d.getDocenteId()); for(Curso c: dao.listarCursos()) model.addRow(new Object[]{c.getCursoId(), c.getNombreCurso(), c.getPeriodoAcademicoId(), c.getDocenteId()}); });
+        btnList.addActionListener(e->{ model.setRowCount(0); 
+            comboPeriodo.removeAllItems(); comboDocente.removeAllItems(); 
+            for(PeriodoAcademico p: pdao.listarPeriodos()) 
+            comboPeriodo.addItem(p.getPeriodoAcademicoId()); 
+            for(Docente d: ddao.listarDocentes()) 
+            comboDocente.addItem(d.getDocenteId()); 
+            for(Curso c: dao.listarCursos()) 
+            model.addRow(new Object[]{c.getCursoId(), 
+                c.getNombreCurso(), 
+                c.getPeriodoAcademicoId(), 
+                c.getDocenteId()}); });
 
-        btnInsert.addActionListener(e->{ try{ Curso c=new Curso(); c.setNombreCurso(txtNombre.getText()); c.setDescripcionCurso(txtDesc.getText()); c.setPeriodoAcademicoId((Integer)comboPeriodo.getSelectedItem()); c.setDocenteId((Integer)comboDocente.getSelectedItem()); int id=dao.insertarCursoYObtenerId(c); JOptionPane.showMessageDialog(this, id!=-1?"Curso insertado ID: "+id:"Error al insertar curso"); btnList.doClick(); }catch(Exception ex){ JOptionPane.showMessageDialog(this,ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);} });
+        btnInsert.addActionListener(e->{ try{ Curso c=new Curso(); 
+            c.setNombreCurso(txtNombre.getText()); 
+            c.setDescripcionCurso(txtDesc.getText()); 
+            c.setPeriodoAcademicoId((Integer)comboPeriodo.getSelectedItem()); 
+            c.setDocenteId((Integer)comboDocente.getSelectedItem()); 
+            int id=dao.insertarCursoYObtenerId(c); 
+            JOptionPane.showMessageDialog(this, id!=-1?"Curso insertado ID: "+id:"Error al insertar curso"); 
+            btnList.doClick(); }catch(Exception ex){ 
+                JOptionPane.showMessageDialog(this,ex.getMessage(),"Error",
+                JOptionPane.ERROR_MESSAGE);} });
 
-        btnDelete.addActionListener(e->{ int r=table.getSelectedRow(); if(r==-1){JOptionPane.showMessageDialog(this,"Seleccione fila");return;} int id=(int)model.getValueAt(r,0); boolean ok=dao.eliminarCurso(id); JOptionPane.showMessageDialog(this, ok?"Curso eliminado":"Error al eliminar"); btnList.doClick(); });
+        btnDelete.addActionListener(e->{ int r=table.getSelectedRow(); 
+            if(r==-1){JOptionPane.showMessageDialog(this,"Seleccione fila");return;} 
+            int id=(int)model.getValueAt(r,0); boolean ok=dao.eliminarCurso(id); 
+            JOptionPane.showMessageDialog(this, ok?"Curso eliminado":"Error al eliminar"); 
+            btnList.doClick(); });
 
-        btnUpdate.addActionListener(e->{ int r=table.getSelectedRow(); if(r==-1){JOptionPane.showMessageDialog(this,"Seleccione fila");return;} try{ int id=(int)model.getValueAt(r,0); Curso c=new Curso(); c.setCursoId(id); c.setNombreCurso(txtNombre.getText()); c.setDescripcionCurso(txtDesc.getText()); c.setPeriodoAcademicoId((Integer)comboPeriodo.getSelectedItem()); c.setDocenteId((Integer)comboDocente.getSelectedItem()); boolean ok=dao.actualizarCurso(c); JOptionPane.showMessageDialog(this, ok?"Curso actualizado":"Error al actualizar"); btnList.doClick(); }catch(Exception ex){ JOptionPane.showMessageDialog(this,ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);} });
+        btnUpdate.addActionListener(e->{ int r=table.getSelectedRow(); if(r==-1){
+            JOptionPane.showMessageDialog(this,"Seleccione fila");return;} 
+        try{ int id=(int)model.getValueAt(r,0); 
+            Curso c=new Curso(); 
+            c.setCursoId(id); 
+            c.setNombreCurso(txtNombre.getText()); 
+            c.setDescripcionCurso(txtDesc.getText()); 
+            c.setPeriodoAcademicoId((Integer)comboPeriodo.getSelectedItem()); 
+            c.setDocenteId((Integer)comboDocente.getSelectedItem()); 
+            boolean ok=dao.actualizarCurso(c); 
+            JOptionPane.showMessageDialog(this, ok?"Curso actualizado":"Error al actualizar"); 
+            btnList.doClick(); }catch(Exception ex){ 
+                JOptionPane.showMessageDialog(this,ex.getMessage(),"Error",
+                JOptionPane.ERROR_MESSAGE);} });
 
-        table.getSelectionModel().addListSelectionListener(ev->{ int r=table.getSelectedRow(); if(r==-1) return; txtId.setText(String.valueOf(model.getValueAt(r,0))); txtNombre.setText(String.valueOf(model.getValueAt(r,1))); txtDesc.setText(String.valueOf(model.getValueAt(r,2))); comboPeriodo.setSelectedItem(model.getValueAt(r,2)); comboDocente.setSelectedItem(model.getValueAt(r,3)); });
+        table.getSelectionModel().addListSelectionListener(ev->{ int r=table.getSelectedRow(); 
+            if(r==-1) return; 
+            txtId.setText(String.valueOf(model.getValueAt(r,0))); 
+            txtNombre.setText(String.valueOf(model.getValueAt(r,1))); 
+            txtDesc.setText(String.valueOf(model.getValueAt(r,2))); 
+            comboPeriodo.setSelectedItem(model.getValueAt(r,2)); 
+            comboDocente.setSelectedItem(model.getValueAt(r,3)); });
 
         return panel;
     }
